@@ -1,0 +1,9 @@
+spring:
+  application:
+    name: SNCF
+
+path:
+  dossier: /path/to/dossiers
+
+
+
