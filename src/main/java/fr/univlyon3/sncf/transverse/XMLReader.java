@@ -9,6 +9,8 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class XMLReader {
 
@@ -67,7 +69,30 @@ public class XMLReader {
         }
     }
 
-    private record StopData(
+    private static final Pattern REGION_PATTERN = Pattern.compile(".*_([A-Z]{3})_.*");
+
+    public Regions extraireRegionDepuisNomFichier(String nomFichier) {
+        Matcher matcher = REGION_PATTERN.matcher(nomFichier);
+
+        if (!matcher.matches()) {
+            throw new IllegalArgumentException(
+                    "Impossible d'extraire le code région depuis le nom de fichier : " + nomFichier
+            );
+        }
+
+        String codeRegion = matcher.group(1);
+
+        try {
+            return Regions.valueOf(codeRegion);
+        } catch (IllegalArgumentException e) {
+            throw new IllegalArgumentException(
+                    "Code région inconnu dans le nom de fichier : " + codeRegion,
+                    e
+            );
+        }
+    }
+
+    public record StopData(
             String stopId,
             String arrivalTime,
             String departureTime,
