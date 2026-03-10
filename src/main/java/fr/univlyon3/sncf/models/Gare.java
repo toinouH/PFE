@@ -6,4 +6,3 @@ public record Gare(String label,
             String longLabel,
             double latitude,
             double longitude) {}
-
