@@ -19,7 +19,7 @@ import java.util.List;
 /// ```
 public class NearestStations {
 
-    private String generateNearestStationsXML(double latitude, double longitude) {
+    public String generateNearestStationsXML(double latitude, double longitude) {
         List<NearestStation> nearestStations = toGare(latitude, longitude);
 
         if (nearestStations.isEmpty()) {
