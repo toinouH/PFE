@@ -46,6 +46,14 @@
             </Door>
         </Zone>
     </Stop>
+    <NearestStations>
+        <nearestStation latitude="43,611206" longitude="1,453616" name1="Tlse Matab." order="1" />
+        <nearestStation latitude="44,825873" longitude="-0,556697" name1="Bordeaux" order="2" />
+        <nearestStation latitude="43,302666" longitude="5,380407" name1="Marseille SC" order="3" />
+        <nearestStation latitude="48,876793" longitude="2,359296" name1="Paris Est" order="4" />
+        <nearestStation latitude="47,217491" longitude="-1,542077" name1="Nantes" order="5" />
+        <nearestStation latitude="48,584532" longitude="7,734793" name1="Strasbourg" order="6" />
+    </NearestStations>
     <Stop stopId="2" arrivalTime="2022-06-29T05:41:03+02:00" firstDoorOpened="2022-06-29T05:41:03+02:00" firstPassenger="2022-06-29T05:41:49+02:00" lastPassenger="2022-06-29T05:41:49+02:00" lastDoorClosed="2022-06-29T05:42:21+02:00" departureTime="2022-06-29T05:42:31+02:00">
         <GPS validity="true" latitude="45.778152" longitude="3.100512" dateTimeFix="2022-06-29T05:41:47+02:00" nbSat="12" trackDegrees="232.9"/>
         <Zone zoneId="M1" zoneType="car" validity="true" capacity="55">
@@ -80,6 +88,14 @@
             </Door>
         </Zone>
     </Stop>
+    <NearestStations>
+        <nearestStation latitude="43,611206" longitude="1,453616" name1="Tlse Matab." order="1" />
+        <nearestStation latitude="44,825873" longitude="-0,556697" name1="Bordeaux" order="2" />
+        <nearestStation latitude="43,302666" longitude="5,380407" name1="Marseille SC" order="3" />
+        <nearestStation latitude="48,876793" longitude="2,359296" name1="Paris Est" order="4" />
+        <nearestStation latitude="47,217491" longitude="-1,542077" name1="Nantes" order="5" />
+        <nearestStation latitude="48,584532" longitude="7,734793" name1="Strasbourg" order="6" />
+    </NearestStations>
     <Stop stopId="3" arrivalTime="2022-06-29T05:47:49+02:00" firstDoorOpened="2022-06-29T05:47:49+02:00" firstPassenger="2022-06-29T05:47:50+02:00" lastPassenger="2022-06-29T05:47:56+02:00" lastDoorClosed="2022-06-29T05:48:16+02:00" departureTime="2022-06-29T05:48:26+02:00">
         <GPS validity="true" latitude="45.767036" longitude="3.134253" dateTimeFix="2022-06-29T05:47:49+02:00" nbSat="12" trackDegrees="128.3"/>
         <Zone zoneId="M1" zoneType="car" validity="true" capacity="55">
@@ -119,6 +135,14 @@
             </Door>
         </Zone>
     </Stop>
+    <NearestStations>
+        <nearestStation latitude="43,611206" longitude="1,453616" name1="Tlse Matab." order="1" />
+        <nearestStation latitude="44,825873" longitude="-0,556697" name1="Bordeaux" order="2" />
+        <nearestStation latitude="43,302666" longitude="5,380407" name1="Marseille SC" order="3" />
+        <nearestStation latitude="48,876793" longitude="2,359296" name1="Paris Est" order="4" />
+        <nearestStation latitude="47,217491" longitude="-1,542077" name1="Nantes" order="5" />
+        <nearestStation latitude="48,584532" longitude="7,734793" name1="Strasbourg" order="6" />
+    </NearestStations>
     <Stop stopId="4" arrivalTime="2022-06-29T06:10:35+02:00" firstDoorOpened="2022-06-29T06:10:35+02:00" firstPassenger="2022-06-29T06:10:36+02:00" lastPassenger="2022-06-29T06:10:41+02:00" lastDoorClosed="2022-06-29T06:10:59+02:00" departureTime="2022-06-29T06:11:10+02:00">
         <GPS validity="true" latitude="45.544277" longitude="3.254167" dateTimeFix="2022-06-29T06:10:35+02:00" nbSat="12" trackDegrees="175.8"/>
         <Zone zoneId="M1" zoneType="car" validity="true" capacity="55">
@@ -157,7 +181,15 @@
                 <Count type="wheelchairs" in="0" out="0"/>
             </Door>
         </Zone>
-    </Stop>    
+    </Stop>
+    <NearestStations>
+        <nearestStation latitude="43,611206" longitude="1,453616" name1="Tlse Matab." order="1" />
+        <nearestStation latitude="43,302666" longitude="5,380407" name1="Marseille SC" order="2" />
+        <nearestStation latitude="44,825873" longitude="-0,556697" name1="Bordeaux" order="3" />
+        <nearestStation latitude="48,876793" longitude="2,359296" name1="Paris Est" order="4" />
+        <nearestStation latitude="47,217491" longitude="-1,542077" name1="Nantes" order="5" />
+        <nearestStation latitude="48,584532" longitude="7,734793" name1="Strasbourg" order="6" />
+    </NearestStations>    
     <Stop stopId="5" arrivalTime="2022-06-29T20:50:35+02:00" firstDoorOpened="2022-06-29T20:50:35+02:00" firstPassenger="2022-06-29T20:50:36+02:00" lastPassenger="2022-06-29T20:51:49+02:00" lastDoorClosed="2022-06-29T20:52:27+02:00" departureTime="2022-06-29T20:52:36+02:00">
         <GPS validity="true" latitude="46.33782" longitude="2.596189" dateTimeFix="2022-06-29T20:52:26+02:00" nbSat="12" trackDegrees="314.4"/>
         <Zone zoneId="M1" zoneType="car" validity="true" capacity="55">

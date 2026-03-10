@@ -27,15 +27,15 @@ public class NearestStations {
         }
 
         StringBuilder xml = new StringBuilder();
-        xml.append("<NearestStations>\n");
+        xml.append("    <NearestStations>\n");
         for (NearestStation station : nearestStations) {
-            xml.append(String.format("    <nearestStation latitude=\"%.6f\" longitude=\"%.6f\" name1=\"%s\" order=\"%d\" />\n",
+            xml.append(String.format("        <nearestStation latitude=\"%.6f\" longitude=\"%.6f\" name1=\"%s\" order=\"%d\" />\n",
                     station.latitude(),
                     station.longitude(),
                     station.name1(),
                     station.order()));
         }
-        xml.append("</NearestStations>");
+        xml.append("    </NearestStations>");
 
         return xml.toString();
     }

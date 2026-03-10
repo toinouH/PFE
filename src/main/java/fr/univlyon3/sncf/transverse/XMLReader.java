@@ -51,15 +51,7 @@ public class XMLReader {
                     totalOut += Integer.parseInt(countElement.getAttribute("out"));
                 }
 
-                stops.add(new StopData(
-                        stopId,
-                        arrivalTime,
-                        departureTime,
-                        latitude,
-                        longitude,
-                        totalIn,
-                        totalOut
-                ));
+                stops.add(new StopData(stopId, arrivalTime, departureTime, latitude, longitude, totalIn, totalOut));
             }
 
             return stops;
@@ -69,6 +61,7 @@ public class XMLReader {
         }
     }
 
+    /// Parse les noms de fichier et cherche le schéma _TRIGRAMME_ (c'est le troisième élément)
     private static final Pattern REGION_PATTERN = Pattern.compile(".*_([A-Z]{3})_.*");
 
     public Regions extraireRegionDepuisNomFichier(String nomFichier) {
