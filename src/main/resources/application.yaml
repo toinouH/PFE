@@ -3,7 +3,11 @@ spring:
     name: SNCF
 
 path:
-  dossier: /path/to/dossiers
+  fichierReferentielGares: /path/to/dossiers
+  dossierEntreesCAV: /path/to/dossiers
+  dossierCAVEnrichisTries: /path/to/dossiers
 
+distance:
+    maxkm: 500.00
 
 

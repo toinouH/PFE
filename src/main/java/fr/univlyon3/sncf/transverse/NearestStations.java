@@ -30,10 +30,7 @@ public class NearestStations {
         xml.append("    <NearestStations>\n");
         for (NearestStation station : nearestStations) {
             xml.append(String.format("        <nearestStation latitude=\"%.6f\" longitude=\"%.6f\" name1=\"%s\" order=\"%d\" />\n",
-                    station.latitude(),
-                    station.longitude(),
-                    station.name1(),
-                    station.order()));
+                    station.latitude(), station.longitude(), station.name1(), station.order()));
         }
         xml.append("    </NearestStations>");
 

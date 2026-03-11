@@ -2,8 +2,6 @@ package fr.univlyon3.sncf;
 
 import fr.univlyon3.sncf.transverse.GestionnaireDossiers;
 import fr.univlyon3.sncf.transverse.Regions;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
@@ -12,14 +10,13 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Comparator;
-import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class GestionnaireDossiersTest {
 
     @TempDir
-    Path tempDir;
+    private static Path tempDir;
 
     @Test
     void doitCreerLesDossiersDesRegionsSilsNexistentPas() throws IOException {
@@ -40,8 +37,7 @@ public class GestionnaireDossiersTest {
         }
     }
 
-    @AfterAll
-    void supprimerDossier() throws IOException {
+    static void supprimerDossier() throws IOException {
 
         tempDir.resolve("C:\\_DVT\\SNCF\\target\\Test");
         if (Files.exists(tempDir)) {
