@@ -1,4 +1,4 @@
-package fr.univlyon3.sncf.controller;
+package fr.univlyon3.sncf.controllers;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
