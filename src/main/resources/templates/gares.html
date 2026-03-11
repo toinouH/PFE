@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <title>Liste des gares</title>
+        <link rel="stylesheet" th:href="@{/css/style.css}">
+    </head>
+    <body>
+
+        <div th:replace="fragments/header :: header"></div>
+
+        <h1>Liste des gares</h1>
+        <!--ajouter le nouveau fichier json de gare-->
+        <form th:action="@{/gares}" method="post" enctype="multipart/form-data">
+            <input type="file" name="file" accept=".json" required>
+            <button type="submit">Upload Gare JSON</button>
+        </form>
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>Short label</th>
+                    <th>Label</th>
+                    <th>Medium label</th>
+                    <th>Long label</th>
+                    <th>Latitude</th>
+                    <th>Longitude</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="gare : ${gares}">
+                    <td th:text="${gare.getShortLabel()}"></td>
+                    <td th:text="${gare.getLabel()}"></td>
+                    <td th:text="${gare.getMediumLabel()}"></td>
+                    <td th:text="${gare.getLongLabel()}"></td>
+                    <td th:text="${gare.getLatitude()}"></td>
+                    <td th:text="${gare.getLongitude()}"></td>
+                </tr>
+            </tbody>
+        </table>
+        <div th:replace="fragments/footer :: footer"></div>
+    </body>
+</html>

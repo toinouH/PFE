@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+
+<header th:fragment="header">
+    <nav>
+        <a th:href="@{/dashboard}">Dashboard</a> |
+        <a th:href="@{/fichiers}">Fichiers</a> |
+        <a th:href="@{/gares}">Gares</a> |
+        <a th:href="@{/frequentations}">Fréquentations</a> |
+        <!-- Affichage du nom du gestionnaire si connecté -->
+            
+            <span th:if="${gestionnaire} != null" th:text="${gestionnaire.nom}"></span>
+         
+        <a th:if="${gestionnaire} != null" th:href="@{/logout}">Logout</a>
+    </nav>
+    <hr>
+</header>
+
+</body>
+</html>

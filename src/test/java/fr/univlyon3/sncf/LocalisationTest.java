@@ -19,17 +19,17 @@ class LocalisationTest {
         List<Gare> result = localisation.getGaresDansUnRayonDe500Km(45.76059597, 4.85940903);
 
         assertEquals(6, result.size());
-        assertTrue(result.stream().anyMatch(gare -> gare.label().equals("Lyon Part Dieu")));
-        assertTrue(result.stream().anyMatch(gare -> gare.label().equals("Paris Est")));
-        assertTrue(result.stream().anyMatch(gare -> gare.label().equals("Marseille Saint-Charles")));
-        assertFalse(result.stream().anyMatch(gare -> gare.label().equals("Lille Europe")));
+        assertTrue(result.stream().anyMatch(gare -> gare.getLabel().equals("Lyon Part Dieu")));
+        assertTrue(result.stream().anyMatch(gare -> gare.getLabel().equals("Paris Est")));
+        assertTrue(result.stream().anyMatch(gare -> gare.getLabel().equals("Marseille Saint-Charles")));
+        assertFalse(result.stream().anyMatch(gare -> gare.getLabel().equals("Lille Europe")));
     }
 
     @Test
     void returnsStationItselfWhenCoordinatesMatchExactly() {
         List<Gare> result = localisation.getGaresDansUnRayonDe500Km(43.302666, 5.380407);
 
-        assertTrue(result.stream().anyMatch(gare -> gare.label().equals("Marseille Saint-Charles")));
+        assertTrue(result.stream().anyMatch(gare -> gare.getLabel().equals("Marseille Saint-Charles")));
     }
 
     @Test

@@ -1,0 +1,205 @@
+<ABC fileId="47" fileVersion="1.0" fileDateTime="2022-06-29T05:22:59+02:00">
+    <DUnits posCurrent="1">
+        <DUnit unitId="X12345" unitType="X76500" position="1" orientation="1" cabin="cab1"/>
+    </DUnits>
+    <Stop stopId="1" arrivalTime="2022-06-29T05:37:58+02:00" firstDoorOpened="2022-06-29T05:37:58+02:00" firstPassenger="2022-06-29T05:37:58+02:00" lastPassenger="2022-06-29T05:38:41+02:00" lastDoorClosed="2022-06-29T05:40:39+02:00" departureTime="2022-06-29T05:40:49+02:00">
+        <GPS validity="true" latitude="45.778168" longitude="3.100508" dateTimeFix="2022-06-29T05:39:49+02:00" nbSat="12" trackDegrees="232.9"/>
+        <Zone zoneId="M1" zoneType="car" validity="true" capacity="55">
+            <Door doorId="M1_P1" doorType="external" validity="true">
+                <Count type="adults" in="6" out="0"/>
+                <Count type="bikes" in="1" out="0"/>
+                <Count type="wheelchairs" in="0" out="0"/>
+            </Door>
+            <Door doorId="M1_P2" doorType="external" validity="true">
+                <Count type="adults" in="2" out="0"/>
+                <Count type="bikes" in="0" out="0"/>
+                <Count type="wheelchairs" in="0" out="0"/>
+            </Door>
+        </Zone>
+        <Zone zoneId="R1" zoneType="car" validity="true" capacity="45">
+            <Door doorId="R1_P1" doorType="external" validity="true">
+                <Count type="adults" in="2" out="0"/>
+                <Count type="bikes" in="0" out="0"/>
+                <Count type="wheelchairs" in="0" out="0"/>
+            </Door>
+            <Door doorId="R1_P2" doorType="external" validity="true">
+                <Count type="adults" in="2" out="0"/>
+                <Count type="bikes" in="0" out="0"/>
+                <Count type="wheelchairs" in="0" out="0"/>
+            </Door>
+            <Door doorId="R1_CI2" doorType="gangway" validity="true">
+                <Count type="adults" in="1" out="0"/>
+                <Count type="bikes" in="0" out="0"/>
+                <Count type="wheelchairs" in="0" out="0"/>
+            </Door>
+        </Zone>
+        <Zone zoneId="M2" zoneType="car" validity="true" capacity="51">
+            <Door doorId="M2_P1" doorType="external" validity="true">
+                <Count type="adults" in="0" out="0"/>
+                <Count type="bikes" in="0" out="0"/>
+                <Count type="wheelchairs" in="0" out="0"/>
+            </Door>
+            <Door doorId="M2_P2" doorType="external" validity="true">
+                <Count type="adults" in="1" out="0"/>
+                <Count type="bikes" in="0" out="0"/>
+                <Count type="wheelchairs" in="0" out="0"/>
+            </Door>
+        </Zone>
+    </Stop>
+    <Stop stopId="2" arrivalTime="2022-06-29T05:41:03+02:00" firstDoorOpened="2022-06-29T05:41:03+02:00" firstPassenger="2022-06-29T05:41:49+02:00" lastPassenger="2022-06-29T05:41:49+02:00" lastDoorClosed="2022-06-29T05:42:21+02:00" departureTime="2022-06-29T05:42:31+02:00">
+        <GPS validity="true" latitude="45.778152" longitude="3.100512" dateTimeFix="2022-06-29T05:41:47+02:00" nbSat="12" trackDegrees="232.9"/>
+        <Zone zoneId="M1" zoneType="car" validity="true" capacity="55">
+            <Door doorId="R1_CI2" doorType="gangway" validity="true">
+                <Count type="adults" in="0" out="0"/>
+                <Count type="bikes" in="0" out="0"/>
+                <Count type="wheelchairs" in="0" out="0"/>
+            </Door>
+        </Zone>
+        <Zone zoneId="R1" zoneType="car" validity="true" capacity="45">
+            <Door doorId="R1_CI1" doorType="gangway" validity="true">
+                <Count type="adults" in="0" out="0"/>
+                <Count type="bikes" in="0" out="0"/>
+                <Count type="wheelchairs" in="0" out="0"/>
+            </Door>
+            <Door doorId="R1_CI2" doorType="gangway" validity="true">
+                <Count type="adults" in="0" out="0"/>
+                <Count type="bikes" in="0" out="0"/>
+                <Count type="wheelchairs" in="0" out="0"/>
+            </Door>
+        </Zone>
+        <Zone zoneId="M2" zoneType="car" validity="true" capacity="51">
+            <Door doorId="M2_P1" doorType="external" validity="true">
+                <Count type="adults" in="1" out="0"/>
+                <Count type="bikes" in="0" out="0"/>
+                <Count type="wheelchairs" in="0" out="0"/>
+            </Door>
+            <Door doorId="M2_P2" doorType="external" validity="true">
+                <Count type="adults" in="0" out="0"/>
+                <Count type="bikes" in="0" out="0"/>
+                <Count type="wheelchairs" in="0" out="0"/>
+            </Door>
+        </Zone>
+    </Stop>
+    <Stop stopId="3" arrivalTime="2022-06-29T05:47:49+02:00" firstDoorOpened="2022-06-29T05:47:49+02:00" firstPassenger="2022-06-29T05:47:50+02:00" lastPassenger="2022-06-29T05:47:56+02:00" lastDoorClosed="2022-06-29T05:48:16+02:00" departureTime="2022-06-29T05:48:26+02:00">
+        <GPS validity="true" latitude="45.767036" longitude="3.134253" dateTimeFix="2022-06-29T05:47:49+02:00" nbSat="12" trackDegrees="128.3"/>
+        <Zone zoneId="M1" zoneType="car" validity="true" capacity="55">
+            <Door doorId="M1_P1" doorType="external" validity="true">
+                <Count type="adults" in="1" out="0"/>
+                <Count type="bikes" in="0" out="0"/>
+                <Count type="wheelchairs" in="0" out="0"/>
+            </Door>
+            <Door doorId="R1_CI2" doorType="gangway" validity="true">
+                <Count type="adults" in="0" out="1"/>
+                <Count type="bikes" in="0" out="0"/>
+                <Count type="wheelchairs" in="0" out="0"/>
+            </Door>
+        </Zone>
+        <Zone zoneId="R1" zoneType="car" validity="true" capacity="45">
+            <Door doorId="R1_P1" doorType="external" validity="true">
+                <Count type="adults" in="2" out="1"/>
+                <Count type="bikes" in="0" out="0"/>
+                <Count type="wheelchairs" in="0" out="0"/>
+            </Door>
+            <Door doorId="R1_CI1" doorType="gangway" validity="true">
+                <Count type="adults" in="0" out="0"/>
+                <Count type="bikes" in="0" out="0"/>
+                <Count type="wheelchairs" in="0" out="0"/>
+            </Door>
+            <Door doorId="R1_CI2" doorType="gangway" validity="true">
+                <Count type="adults" in="1" out="0"/>
+                <Count type="bikes" in="0" out="0"/>
+                <Count type="wheelchairs" in="0" out="0"/>
+            </Door>
+        </Zone>
+        <Zone zoneId="M2" zoneType="car" validity="true" capacity="51">
+            <Door doorId="R1_CI1" doorType="gangway" validity="true">
+                <Count type="adults" in="0" out="0"/>
+                <Count type="bikes" in="0" out="0"/>
+                <Count type="wheelchairs" in="0" out="0"/>
+            </Door>
+        </Zone>
+    </Stop>
+    <Stop stopId="4" arrivalTime="2022-06-29T06:10:35+02:00" firstDoorOpened="2022-06-29T06:10:35+02:00" firstPassenger="2022-06-29T06:10:36+02:00" lastPassenger="2022-06-29T06:10:41+02:00" lastDoorClosed="2022-06-29T06:10:59+02:00" departureTime="2022-06-29T06:11:10+02:00">
+        <GPS validity="true" latitude="45.544277" longitude="3.254167" dateTimeFix="2022-06-29T06:10:35+02:00" nbSat="12" trackDegrees="175.8"/>
+        <Zone zoneId="M1" zoneType="car" validity="true" capacity="55">
+            <Door doorId="M1_P1" doorType="external" validity="true">
+                <Count type="adults" in="1" out="1"/>
+                <Count type="bikes" in="0" out="0"/>
+                <Count type="wheelchairs" in="0" out="0"/>
+            </Door>
+            <Door doorId="R1_CI2" doorType="gangway" validity="true">
+                <Count type="adults" in="2" out="1"/>
+                <Count type="bikes" in="0" out="0"/>
+                <Count type="wheelchairs" in="0" out="0"/>
+            </Door>
+        </Zone>
+        <Zone zoneId="R1" zoneType="car" validity="true" capacity="45">
+            <Door doorId="R1_P1" doorType="external" validity="true">
+                <Count type="adults" in="3" out="3"/>
+                <Count type="bikes" in="0" out="0"/>
+                <Count type="wheelchairs" in="0" out="0"/>
+            </Door>
+            <Door doorId="R1_CI2" doorType="gangway" validity="true">
+                <Count type="adults" in="1" out="2"/>
+                <Count type="bikes" in="0" out="0"/>
+                <Count type="wheelchairs" in="0" out="0"/>
+            </Door>
+        </Zone>
+        <Zone zoneId="M2" zoneType="car" validity="true" capacity="51">
+            <Door doorId="M2_P2" doorType="external" validity="true">
+                <Count type="adults" in="0" out="0"/>
+                <Count type="bikes" in="0" out="0"/>
+                <Count type="wheelchairs" in="0" out="0"/>
+            </Door>
+            <Door doorId="R1_CI1" doorType="gangway" validity="true">
+                <Count type="adults" in="3" out="3"/>
+                <Count type="bikes" in="0" out="0"/>
+                <Count type="wheelchairs" in="0" out="0"/>
+            </Door>
+        </Zone>
+    </Stop>    
+    <Stop stopId="5" arrivalTime="2022-06-29T20:50:35+02:00" firstDoorOpened="2022-06-29T20:50:35+02:00" firstPassenger="2022-06-29T20:50:36+02:00" lastPassenger="2022-06-29T20:51:49+02:00" lastDoorClosed="2022-06-29T20:52:27+02:00" departureTime="2022-06-29T20:52:36+02:00">
+        <GPS validity="true" latitude="46.33782" longitude="2.596189" dateTimeFix="2022-06-29T20:52:26+02:00" nbSat="12" trackDegrees="314.4"/>
+        <Zone zoneId="M1" zoneType="car" validity="true" capacity="55">
+            <Door doorId="M1_P2" doorType="external" validity="true">
+                <Count type="adults" in="1" out="2"/>
+                <Count type="bikes" in="0" out="0"/>
+                <Count type="wheelchairs" in="0" out="0"/>
+            </Door>
+            <Door doorId="R1_CI2" doorType="gangway" validity="true">
+                <Count type="adults" in="0" out="2"/>
+                <Count type="bikes" in="0" out="0"/>
+                <Count type="wheelchairs" in="0" out="0"/>
+            </Door>
+        </Zone>
+        <Zone zoneId="R1" zoneType="car" validity="true" capacity="45">
+            <Door doorId="R1_P2" doorType="external" validity="true" >
+                <Count type="adults" in="0" out="3"/>
+                <Count type="bikes" in="0" out="0"/>
+                <Count type="wheelchairs" in="0" out="0"/>
+            </Door>
+            <Door doorId="R1_CI1" doorType="gangway" validity="true">
+                <Count type="adults" in="0" out="1"/>
+                <Count type="bikes" in="0" out="0"/>
+                <Count type="wheelchairs" in="0" out="0"/>
+            </Door>
+            <Door doorId="R1_CI2" doorType="gangway" validity="true">
+                <Count type="adults" in="2" out="0"/>
+                <Count type="bikes" in="0" out="0"/>
+                <Count type="wheelchairs" in="0" out="0"/>
+            </Door>
+        </Zone>
+        <Zone zoneId="M2" zoneType="car" validity="true" capacity="51">
+            <Door doorId="M2_P2" doorType="external" validity="true">
+                <Count type="adults" in="0" out="6"/>
+                <Count type="bikes" in="0" out="0"/>
+                <Count type="wheelchairs" in="0" out="1"/>
+            </Door>
+            <Door doorId="R1_CI1" doorType="gangway" validity="true">
+                <Count type="adults" in="1" out="0"/>
+                <Count type="bikes" in="0" out="0"/>
+                <Count type="wheelchairs" in="0" out="0"/>
+            </Door>
+        </Zone>
+    </Stop>
+</ABC>
