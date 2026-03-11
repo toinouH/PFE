@@ -1,5 +1,6 @@
 package fr.univlyon3.sncf.transverse;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
@@ -14,6 +15,18 @@ import java.util.regex.Pattern;
 
 public class XMLReader {
 
+    @Value("${path.fichierReferentielGares}")
+    private String cheminFichier;
+
+    /// Cette méthode permet plus de flexibilité en passant directement le chemin du répertoire des fichiers XML
+    /// grâce au @Value (bien pratique)
+    public List<StopData> lireStops() {
+        return lireStops(cheminFichier);
+    }
+
+    /// Permet de lire les données des gares à partir d'un fichier XML
+    /// On passe en paramètre le chemin du fichier XML
+    /// @Param cheminFichier : chemin du fichier XML à lire
     public List<StopData> lireStops(String cheminFichier) {
         List<StopData> stops = new ArrayList<>();
 

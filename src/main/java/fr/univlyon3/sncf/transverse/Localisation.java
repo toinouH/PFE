@@ -1,6 +1,7 @@
 package fr.univlyon3.sncf.transverse;
 
 import fr.univlyon3.sncf.models.Gare;
+import org.springframework.beans.factory.annotation.Value;
 import tools.jackson.core.type.TypeReference;
 import tools.jackson.databind.ObjectMapper;
 
@@ -13,10 +14,14 @@ import java.util.List;
 public class Localisation {
 
     private static final double RAYON_TERRE_KM = 6371.0D;
-    private static final double DISTANCE_MAX_KM = 500.0D;
+
+    @Value("${distance.maxkm}")
+    private double DISTANCE_MAX_KM = 500.0D;    // La valeur par défaut est de 500.00km
 
     // Dans un monde idéal on peut paramétrer la localisation du fichier plus que ça
-    private static final String SOURCE_FICHIER_JSON = "input/Référentiel_stations_transverses.json";
+    // Si la clef existe dans la configuration elle passe par dessus la valeur par défaut
+    @Value("${path.fichierReferentielGares}")
+    private String SOURCE_FICHIER_JSON = "input/Référentiel_stations_transverses.json";
 
     /// Cette méthode retourne la liste des gares situées dans un rayon de 500km autour d'un point donné
     /// Les gares sont ordonnées dans l'ordre croissant de la plus proche à la plus éloignée
@@ -61,7 +66,8 @@ public class Localisation {
         }
     }
 
-    // La formule mathématique est un peu folle j'admets mais c'est la formule de Haversine pour calculer la distance entre deux points sur une sphère.
+    /// La formule mathématique est un peu folle j'admets mais c'est la formule de Haversine pour calculer la
+    /// distance entre deux points sur une sphère (ici la terre).
     private double calculerDistanceKm(double latitude1, double longitude1, double latitude2, double longitude2) {
         double lat1Rad = Math.toRadians(latitude1);
         double lon1Rad = Math.toRadians(longitude1);
