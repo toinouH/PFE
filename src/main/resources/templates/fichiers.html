@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Fichiers CAVE</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <h1>Liste des fichiers CAVE</h1>
+
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Nom</th>
+                <th>Région</th>
+                <th>Taux d'enrichissement</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="fichier : ${fichiers}">
+                <td th:text="${fichier.nom}"></td>
+                <td th:text="${fichier.region}"></td>
+                <td th:text="${fichier.taux + '%'}"></td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>
