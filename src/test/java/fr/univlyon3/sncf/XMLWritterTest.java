@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -15,15 +16,20 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public class XMLWritterTest {
 
     @Test
-    public void testEnrichirXML() throws IOException {
+    void doitEcrireLeFichierEnrichiDansLeDossierDeSortieAssortiDuSousDossierRegion() throws IOException {
         XMLWritter writter = new XMLWritter();
         String inputPath = "input/FichierCAVE_AQU_X12345_29062022.xml";
-        String outputPath = "target/test-output/FichierCAVE_AQU_X12345_29062022_enriched.xml";
-        String expectedResult = "target/FichierCAVE_AQU_X12345_29062022_enriched.xml";
+        String outputPath = "target/test-output/";
+        String expectedResult = "target/AQU/FichierCAVE_AQU_X12345_29062022_enriched.xml";
 
         writter.enrichirXML(inputPath, outputPath);
 
-        String actualContent = Files.readString(Paths.get(outputPath)).replace("\r\n", "\n");
+        Path actualOutputFile = Paths.get(outputPath, "AQU", "FichierCAVE_AQU_X12345_29062022_enriched.xml");
+
+        assertTrue(Files.exists(actualOutputFile), "Le fichier de sortie doit être créé dans le sous-dossier de région");
+        assertTrue(Files.isRegularFile(actualOutputFile), "Le chemin de sortie doit pointer vers un fichier");
+
+        String actualContent = Files.readString(actualOutputFile).replace("\r\n", "\n");
 
         String expectedContent;
         try (InputStream is = getClass().getClassLoader().getResourceAsStream(expectedResult)) {
