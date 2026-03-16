@@ -1,0 +1,66 @@
+[
+    {
+        "label": "Paris Est",
+        "shortLabel": "Paris Est",
+        "mediumLabel": "Paris Est",
+        "longLabel": "Paris Est",
+        "latitude": 48.87679325,
+        "longitude": 2.35929552
+    },
+    {
+        "label": "Lyon Part Dieu",
+        "shortLabel": "Lyon Part D.",
+        "mediumLabel": "Lyon Part Dieu",
+        "longLabel": "Lyon Part Dieu",
+        "latitude": 45.76059597,
+        "longitude": 4.85940903
+    },
+    {
+        "label": "Bordeaux Saint-Jean",
+        "shortLabel": "Bordeaux",
+        "mediumLabel": "Bordeaux Saint-Jean",
+        "longLabel": "Bordeaux Saint-Jean",
+        "latitude": 44.825873,
+        "longitude": -0.556697
+    },
+    {
+        "label": "Toulouse Matabiau",
+        "shortLabel": "Tlse Matab.",
+        "mediumLabel": "Toulouse Matabiau",
+        "longLabel": "Toulouse Matabiau",
+        "latitude": 43.611206,
+        "longitude": 1.453616
+    },
+    {
+        "label": "Lille Europe",
+        "shortLabel": "Lille Europe",
+        "mediumLabel": "Lille Europe",
+        "longLabel": "Lille Europe",
+        "latitude": 50.6394,
+        "longitude": 3.075721
+    },
+    {
+        "label": "Strasbourg",
+        "shortLabel": "Strasbourg",
+        "mediumLabel": "Strasbourg",
+        "longLabel": "Strasbourg",
+        "latitude": 48.584532,
+        "longitude": 7.734793
+    },
+    {
+        "label": "Marseille Saint-Charles",
+        "shortLabel": "Marseille SC",
+        "mediumLabel": "Marseille Saint-Charles",
+        "longLabel": "Marseille Saint-Charles",
+        "latitude": 43.302666,
+        "longitude": 5.380407
+    },
+    {
+        "label": "Nantes",
+        "shortLabel": "Nantes",
+        "mediumLabel": "Nantes",
+        "longLabel": "Nantes",
+        "latitude": 47.2174913,
+        "longitude": -1.54207706
+    }
+]

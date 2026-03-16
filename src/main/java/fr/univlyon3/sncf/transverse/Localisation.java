@@ -40,7 +40,7 @@ public class Localisation {
             // On calcule la distance entre le point et chacune des gares
             // Si le nombre de gare est trop grand on pourrait le faire un parallèle avec une l'API de Concurrence Structurée en preview
             for (Gare gare : gares) {
-                double distance = calculerDistanceKm(latitude, longitude, gare.latitude(), gare.longitude());
+                double distance = calculerDistanceKm(latitude, longitude, gare.getLatitude(), gare.getLongitude());
 
                 if (distance <= DISTANCE_MAX_KM) {
                     // On ajoute la gare et sa distance au résultat
