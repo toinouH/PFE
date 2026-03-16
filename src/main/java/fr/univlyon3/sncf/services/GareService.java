@@ -1,16 +1,18 @@
 package fr.univlyon3.sncf.services;
 
 import fr.univlyon3.sncf.models.Gare;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
 import tools.jackson.core.type.TypeReference;
 import tools.jackson.databind.ObjectMapper;
-import org.springframework.stereotype.Service;
 
 import java.io.InputStream;
 import java.util.List;
 
-@Service
+@Service("gareService")
 public class GareService {
 
+    @Value("${path.fichierReferentielGares}")
     private static final String SOURCE_FICHIER_JSON = "input/Référentiel_stations_transverses.json";
 
     public List<Gare> getAllGares() {

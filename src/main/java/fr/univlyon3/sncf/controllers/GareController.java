@@ -2,17 +2,18 @@ package fr.univlyon3.sncf.controllers;
 
 import fr.univlyon3.sncf.services.GareService;
 import fr.univlyon3.sncf.models.Gestionnaire;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.web.bind.annotation.GetMapping;
 
-@Controller
+@Controller("gareController")
 public class GareController {
 
     private final GareService gareService;
 
-    public GareController(GareService gareService) {
+    public GareController(@Qualifier("gareService") GareService gareService) {
         this.gareService = gareService;
     }
 

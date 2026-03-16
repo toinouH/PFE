@@ -1,12 +1,12 @@
 package fr.univlyon3.sncf.services;
 
-import fr.univlyon3.sncf.models.*;
+import fr.univlyon3.sncf.models.Gestionnaire;
 import fr.univlyon3.sncf.repositories.GestionnaireRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
-@Service
+@Service("authService")
 public class AuthService {
 
     private final GestionnaireRepository gestionnaireRepository;

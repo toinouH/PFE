@@ -1,5 +1,6 @@
 package fr.univlyon3.sncf.controllers;
 
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import fr.univlyon3.sncf.models.Gestionnaire;
@@ -7,12 +8,12 @@ import  fr.univlyon3.sncf.services.AuthService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.web.bind.annotation.*;
 
-@Controller
+@Controller("viewController")
 public class ViewController {
 
-     private final AuthService authService;
+    private final AuthService authService;
 
-    public ViewController(AuthService authService) {
+    public ViewController(@Qualifier("authService") AuthService authService) {
         this.authService = authService;
     }
 
