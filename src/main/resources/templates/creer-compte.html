@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <title>Créer un compte - SNCF</title>
+        <link rel="stylesheet" th:href="@{/css/style.css}">
+    </head>
+    <body>
+        <div th:replace="fragments/header :: header"></div>
+        <h1>Créer un compte</h1>
+
+        <form th:action="@{/creer-compte}" method="post">
+            <div>
+                <label for="nom">Nom:</label>
+                <input type="text" id="nom" name="nom" required>
+            <div>
+            <div>
+                <label for="prenom">Prénom:</label>
+                <input type="text" id="prenom" name="prenom" required>
+            </div>
+            <div>
+                <label for="login">Login:</label>
+                <input type="text" id="login" name="login" required>
+            </div>
+
+            <div>
+                <label for="motPasse">Password:</label>
+                <input type="password" id="motPasse" name="motPasse" required>
+            </div>
+            <div>
+                <label for="confirmMotPasse">Confirm Password:</label>
+                <input type="password" id="confirmMotPasse" name="confirmMotPasse" required>
+            </div>
+
+            <div>
+                <button type="submit">Register</button>
+            </div>
+        </form>
+
+        <p th:if="${error}" th:text="${error}" style="color:red;"></p>
+        <div th:replace="fragments/footer :: footer"></div>
+    </body>
+</html>

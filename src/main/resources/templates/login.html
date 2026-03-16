@@ -1,15 +1,32 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Fichiers CAVE</title>
+    <meta charset="UTF-8">
+    <title>Login - SNCF</title>
     <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body>
-    <h1>Connexion</h1>
+    <div th:replace="fragments/header :: header"></div>
+    <h1>Login</h1>
+
     <form th:action="@{/login}" method="post">
-        <input type ="text" placeholder="Nom d'utilisateur" required>
-        <input type="password" placeholder="Mot de passe" required>
-        <button type="submit">Se connecter</button>
+        <div>
+            <label for="login">Login:</label>
+            <input type="text" id="login" name="login" required>
+        </div>
+
+        <div>
+            <label for="motPasse">Password:</label>
+            <input type="password" id="motPasse" name="motPasse" required>
+        </div>
+
+        <div>
+            <button type="submit">Sign in</button>
+        </div>
     </form>
+
+    <p th:if="${error}" th:text="${error}" style="color:red;"></p>
+    <p>Don't have an account? <a th:href="@{/creer-compte}">Register here</a>.</p>
+    <div th:replace="fragments/footer :: footer"></div>
 </body>
 </html>
