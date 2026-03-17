@@ -76,15 +76,4 @@ public class ViewController {
         return "dashboard";
     }
 
-    @GetMapping("/fichiers")
-    public String fichiers(Model model) {
-        return "fichiers";
-    }
-
-    
-
-    @GetMapping("/frequentations")
-    public String frequentations(Model model) {
-        return "frequentations";
-    }
 }

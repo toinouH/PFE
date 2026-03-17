@@ -1,5 +1,9 @@
 package fr.univlyon3.sncf.models;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.List;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -9,10 +13,6 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.List;
 
 @Entity
 @Table(name = "fichier_cave")
@@ -38,7 +38,7 @@ public class FichierCave {
     private String statutEnrichissement;
 
     @Column(nullable = false)
-    private float tauxEnrichissement;
+    private double tauxEnrichissement;
 
     @Column(nullable = false)
     private String cheminFichierOriginal;
@@ -104,11 +104,11 @@ public class FichierCave {
         this.statutEnrichissement = statutEnrichissement;
     }
 
-    public float getTauxEnrichissement() {
+    public double  getTauxEnrichissement() {
         return tauxEnrichissement;
     }
 
-    public void setTauxEnrichissement(float tauxEnrichissement) {
+    public void setTauxEnrichissement(double  tauxEnrichissement) {
         this.tauxEnrichissement = tauxEnrichissement;
     }
 
@@ -145,7 +145,7 @@ public class FichierCave {
     }
 
     public FichierCave(Integer idFichier, String nomFichier, LocalDateTime dateReception, LocalDate dateCourse,
-            String vehicule, String statutEnrichissement, float tauxEnrichissement, String cheminFichierOriginal,
+            String vehicule, String statutEnrichissement, double tauxEnrichissement, String cheminFichierOriginal,
             String cheminFichierEnrichi, Region region, List<FrequentationGare> frequentations) {
         this.idFichier = idFichier;
         this.nomFichier = nomFichier;

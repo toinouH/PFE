@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Fréquentations</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+
+<div th:replace="fragments/header :: header"></div>
+
+<h1>Fréquentation des gares</h1>
+
+<table border="1">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Date mesure</th>
+            <th>Gare</th>
+            <th>Fichier</th>
+            <th>Montées adultes</th>
+            <th>Descentes adultes</th>
+            <th>Montées vélos</th>
+            <th>Descentes vélos</th>
+            <th>Montées PMR</th>
+            <th>Descentes PMR</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr th:each="f : ${frequentations}">
+            <td th:text="${f.idFrequentation}"></td>
+            <td th:text="${f.dateMesure}"></td>
+            <td th:text="${f.gare.shortLabel}"></td>
+            <td th:text="${f.fichierCave.nomFichier}"></td>
+            <td th:text="${f.monteesAdults}"></td>
+            <td th:text="${f.descentesAdults}"></td>
+            <td th:text="${f.monteesBikes}"></td>
+            <td th:text="${f.descentesBikes}"></td>
+            <td th:text="${f.monteesWheelchairs}"></td>
+            <td th:text="${f.descentesWheelchairs}"></td>
+        </tr>
+    </tbody>
+</table>
+
+</body>
+</html>
