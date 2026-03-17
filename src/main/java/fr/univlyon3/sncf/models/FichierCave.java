@@ -1,28 +1,34 @@
 package fr.univlyon3.sncf.models;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.List;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Index;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.List;
-
 @Entity
-@Table(name = "fichier_cave")
+@Table(
+    name = "fichier_cave",
+    indexes = {
+        @Index(name = "idx_nom_fichier", columnList = "nomFichier")
+    }
+)
 public class FichierCave {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idFichier;
 
-    @Column(nullable = false)
+    @Column(nullable = false,unique = true)
     private String nomFichier;
 
     @Column(nullable = false)
@@ -38,10 +44,7 @@ public class FichierCave {
     private String statutEnrichissement;
 
     @Column(nullable = false)
-    private float tauxEnrichissement;
-
-    @Column(nullable = false)
-    private String cheminFichierOriginal;
+    private double tauxEnrichissement;
 
     @Column(nullable = false)
     private String cheminFichierEnrichi;
@@ -104,20 +107,12 @@ public class FichierCave {
         this.statutEnrichissement = statutEnrichissement;
     }
 
-    public float getTauxEnrichissement() {
+    public double  getTauxEnrichissement() {
         return tauxEnrichissement;
     }
 
-    public void setTauxEnrichissement(float tauxEnrichissement) {
+    public void setTauxEnrichissement(double  tauxEnrichissement) {
         this.tauxEnrichissement = tauxEnrichissement;
-    }
-
-    public String getCheminFichierOriginal() {
-        return cheminFichierOriginal;
-    }
-
-    public void setCheminFichierOriginal(String cheminFichierOriginal) {
-        this.cheminFichierOriginal = cheminFichierOriginal;
     }
 
     public String getCheminFichierEnrichi() {
@@ -145,7 +140,7 @@ public class FichierCave {
     }
 
     public FichierCave(Integer idFichier, String nomFichier, LocalDateTime dateReception, LocalDate dateCourse,
-            String vehicule, String statutEnrichissement, float tauxEnrichissement, String cheminFichierOriginal,
+            String vehicule, String statutEnrichissement, double tauxEnrichissement, String cheminFichierOriginal,
             String cheminFichierEnrichi, Region region, List<FrequentationGare> frequentations) {
         this.idFichier = idFichier;
         this.nomFichier = nomFichier;
@@ -154,7 +149,6 @@ public class FichierCave {
         this.vehicule = vehicule;
         this.statutEnrichissement = statutEnrichissement;
         this.tauxEnrichissement = tauxEnrichissement;
-        this.cheminFichierOriginal = cheminFichierOriginal;
         this.cheminFichierEnrichi = cheminFichierEnrichi;
         this.region = region;
         this.frequentations = frequentations;

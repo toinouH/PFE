@@ -1,17 +1,23 @@
 package fr.univlyon3.sncf.models;
 
+import java.util.List;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Index;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
-import java.util.List;
-
 @Entity
-@Table(name = "gare")
+@Table(
+    name = "gare",
+    indexes = {
+        @Index(name = "idx_gare_short_label", columnList = "shortLabel")
+    }
+)
 public class Gare {
 
     @Id
@@ -21,7 +27,7 @@ public class Gare {
     @Column(nullable = false)
     private String label;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String shortLabel;
 
     @Column(nullable = false)

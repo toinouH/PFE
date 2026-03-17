@@ -11,10 +11,16 @@
 
         <h1>Liste des gares</h1>
         <!--ajouter le nouveau fichier json de gare-->
-        <form th:action="@{/gares}" method="post" enctype="multipart/form-data">
-            <input type="file" name="file" accept=".json" required>
-            <button type="submit">Upload Gare JSON</button>
+        <p th:if="${successMessage}" th:text="${successMessage}" style="color: green; font-weight: bold;"></p>
+        <p th:if="${errorMessage}" th:text="${errorMessage}" style="color: red; font-weight: bold;"></p>
+
+        <h2>Importer le référentiel JSON</h2>
+        <form th:action="@{/gares/upload-json}" method="post" enctype="multipart/form-data">
+            <input type="file" name="jsonFile" accept=".json" required>
+            <button type="submit">Importer le JSON</button>
         </form>
+
+        <hr>
         <table border="1">
             <thead>
                 <tr>

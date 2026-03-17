@@ -4,15 +4,21 @@ import fr.univlyon3.sncf.transverse.NearestStations;
 import fr.univlyon3.sncf.transverse.Regions;
 import fr.univlyon3.sncf.transverse.XMLReader;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+
+import java.nio.file.Path;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+@SpringBootTest
 class NearestStationsTest {
-    
-    private final XMLReader xmlReader = new XMLReader();
-    
+
+    @Autowired
+    private XMLReader xmlReader;
+
     @Test
     void reconnaissanceDesRegionsDansLesFichiers() {
         String nomFichier = "FichierCAVE_AQU_X12345_29062022.xml";
@@ -75,43 +81,35 @@ class NearestStationsTest {
         assertEquals(Regions.PDL, regionObtenue12);
         assertEquals("PAYS-DE-LA-LOIRE", regionObtenue12.getLibelle());
     }
-    
+
     @Test
     void genererBlocNearestStationsXML() {
-        String nomFichier = "input/FichierCAVE_AQU_X12345_29062022.xml";
-        XMLReader xmlReader = new XMLReader();
-        
-        // Lire les arrêts du fichier XML
+        String nomFichier = Path.of("src", "test", "resources", "input", "FichierCAVE_AQU_X12345_29062022.xml").toString();
+
         var stops = xmlReader.lireStops(nomFichier);
-        System.out.println(stops);
-        
-        // Vérifier qu'il y a des arrêts
+
         assertFalse(stops.isEmpty(), "Le fichier XML doit contenir des arrêts");
-        
-        // Créer une instance de NearestStations
+
         NearestStations nearestStations = new NearestStations();
-        
-        // Générer le bloc XML pour chaque arrêt
+
         for (var stop : stops) {
             String xmlGenere = nearestStations.generateNearestStationsXML(stop.latitude(), stop.longitude());
-            System.out.println(xmlGenere);
-            
-            // Vérifier que le XML généré contient les éléments attendus
+
             if (!xmlGenere.isEmpty()) {
-                assertTrue(xmlGenere.contains("<NearestStations>"), 
-                    "Le XML généré doit contenir l'élément d'ouverture <NearestStations>");
-                assertTrue(xmlGenere.contains("</NearestStations>"), 
-                    "Le XML généré doit contenir l'élément de fermeture </NearestStations>");
-                assertTrue(xmlGenere.contains("<nearestStation"), 
-                    "Le XML généré doit contenir des éléments <nearestStation>");
-                assertTrue(xmlGenere.contains("latitude="), 
-                    "Les stations doivent contenir l'attribut latitude");
-                assertTrue(xmlGenere.contains("longitude="), 
-                    "Les stations doivent contenir l'attribut longitude");
-                assertTrue(xmlGenere.contains("name1="), 
-                    "Les stations doivent contenir l'attribut name1");
-                assertTrue(xmlGenere.contains("order="), 
-                    "Les stations doivent contenir l'attribut order");
+                assertTrue(xmlGenere.contains("<NearestStations>"),
+                        "Le XML généré doit contenir l'élément d'ouverture <NearestStations>");
+                assertTrue(xmlGenere.contains("</NearestStations>"),
+                        "Le XML généré doit contenir l'élément de fermeture </NearestStations>");
+                assertTrue(xmlGenere.contains("<nearestStation"),
+                        "Le XML généré doit contenir des éléments <nearestStation>");
+                assertTrue(xmlGenere.contains("latitude="),
+                        "Les stations doivent contenir l'attribut latitude");
+                assertTrue(xmlGenere.contains("longitude="),
+                        "Les stations doivent contenir l'attribut longitude");
+                assertTrue(xmlGenere.contains("name1="),
+                        "Les stations doivent contenir l'attribut name1");
+                assertTrue(xmlGenere.contains("order="),
+                        "Les stations doivent contenir l'attribut order");
             }
         }
     }

@@ -41,8 +41,8 @@ public class NearestStations {
         Localisation localisation = new Localisation();
         List<Gare> gares = localisation.getGaresDansUnRayonDe500Km(latitude, longitude);
         List<NearestStation> nearestStations = new ArrayList<>();
-        for (int i = 1; i < gares.size(); i++) {
-            nearestStations.add(new NearestStation(gares.get(i).getLatitude(), gares.get(i).getLongitude(), gares.get(i).getShortLabel(), i));
+        for (int i = 0; i < gares.size() ; i++) {
+            nearestStations.add(new NearestStation(gares.get(i).getLatitude(), gares.get(i).getLongitude(), gares.get(i).getShortLabel(), i + 1));
         }
         return nearestStations;
     }

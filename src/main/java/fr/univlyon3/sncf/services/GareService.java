@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import tools.jackson.core.type.TypeReference;
 import tools.jackson.databind.ObjectMapper;
 
+
 import java.io.InputStream;
 import java.util.List;
 
@@ -28,4 +29,6 @@ public class GareService {
             throw new RuntimeException("Error while reading stations JSON file", e);
         }
     }
+
+    
 }
