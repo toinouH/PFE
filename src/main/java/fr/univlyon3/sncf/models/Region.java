@@ -18,7 +18,7 @@ public class Region {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(nullable = false, unique = true, length = 10)
+    @Column(nullable = false, unique = true, length = 3)
     private String trigramme;
 
     @Column(nullable = false)

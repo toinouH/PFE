@@ -1,22 +1,37 @@
 package fr.univlyon3.sncf.transverse;
 
+import fr.univlyon3.sncf.models.FichierCave;
+import fr.univlyon3.sncf.models.Region;
+import fr.univlyon3.sncf.repositories.FichierCaveRepository;
+import fr.univlyon3.sncf.repositories.RegionRepository;
 import jakarta.annotation.Resource;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
-import java.nio.charset.StandardCharsets;
+import java.util.Optional;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Component("xmlWritter")
 public class XMLWritter {
 
     @Resource(name = "xmlReader")
     private XMLReader reader;
+    @Resource(name = "fichierCaveRepository")
+    private FichierCaveRepository fichierCaveRepository;
+    @Resource(name = "regionRepository")
+    private RegionRepository regionRepository;
 
     public void enrichirXML(String inputXmlPath, String outputXmlPath) throws IOException {
         List<XMLReader.StopData> stops = reader.lireStops(inputXmlPath);
@@ -60,6 +75,41 @@ public class XMLWritter {
         Path outputPath = construireCheminSortie(inputXmlPath, outputXmlPath);
         Files.createDirectories(outputPath.getParent());
         Files.writeString(outputPath, enrichedContent.toString());
+
+        enregistrerEnBase(inputXmlPath, outputPath.toString());
+    }
+
+    private void enregistrerEnBase(String inputXmlPath, String outputXmlPath) {
+        String nomFichier = Paths.get(inputXmlPath).getFileName().toString();
+        Regions regionEnum = reader.extraireRegionDepuisNomFichier(nomFichier);
+
+        Optional<Region> regionOpt = regionRepository.findByTrigramme(regionEnum.name());
+        if (regionOpt.isPresent()) {
+            FichierCave fichierCave = new FichierCave();
+            fichierCave.setNomFichier(nomFichier);
+            fichierCave.setDateReception(LocalDateTime.now());
+            fichierCave.setCheminFichierOriginal(inputXmlPath);
+            fichierCave.setCheminFichierEnrichi(outputXmlPath);
+            fichierCave.setRegion(regionOpt.get());
+            fichierCave.setStatutEnrichissement("ENRICHI");
+            fichierCave.setTauxEnrichissement(100.0f); // Valeur par défaut simplifiée  // TODO Trouver une formule de calcul
+
+            // Extraction des métadonnées du nom de fichier : FichierCAVE_AQU_X12345_29062022.xml
+            Pattern pattern = Pattern.compile("FichierCAVE_[A-Z]{3}_([^_]+)_(\\d{8})\\.xml");
+            Matcher matcher = pattern.matcher(nomFichier);
+            if (matcher.matches()) {
+                fichierCave.setVehicule(matcher.group(1));
+                String dateStr = matcher.group(2);
+                LocalDate dateCourse = LocalDate.parse(dateStr, DateTimeFormatter.ofPattern("ddMMyyyy"));
+                fichierCave.setDateCourse(dateCourse);
+            } else {
+                // Valeurs par défaut si le pattern ne correspond pas
+                fichierCave.setVehicule("INCONNU");
+                fichierCave.setDateCourse(LocalDate.now());
+            }
+
+            fichierCaveRepository.save(fichierCave);
+        }
     }
 
     private Path construireCheminSortie(String inputXmlPath, String outputXmlPath) {

@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
-public class Localisation {
+public class Localisation implements LocalisationService {
 
     private static final double RAYON_TERRE_KM = 6371.0D;
 
@@ -67,7 +67,7 @@ public class Localisation {
 
     /// La formule mathématique est un peu folle j'admets mais c'est la formule de Haversine pour calculer la
     /// distance entre deux points sur une sphère (ici la terre).
-    private double calculerDistanceKm(double latitude1, double longitude1, double latitude2, double longitude2) {
+    public double calculerDistanceKm(double latitude1, double longitude1, double latitude2, double longitude2) {
         double lat1Rad = Math.toRadians(latitude1);
         double lon1Rad = Math.toRadians(longitude1);
         double lat2Rad = Math.toRadians(latitude2);
