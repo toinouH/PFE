@@ -9,20 +9,26 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Index;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "fichier_cave")
+@Table(
+    name = "fichier_cave",
+    indexes = {
+        @Index(name = "idx_nom_fichier", columnList = "nomFichier")
+    }
+)
 public class FichierCave {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idFichier;
 
-    @Column(nullable = false)
+    @Column(nullable = false,unique = true)
     private String nomFichier;
 
     @Column(nullable = false)
@@ -39,9 +45,6 @@ public class FichierCave {
 
     @Column(nullable = false)
     private double tauxEnrichissement;
-
-    @Column(nullable = false)
-    private String cheminFichierOriginal;
 
     @Column(nullable = false)
     private String cheminFichierEnrichi;
@@ -112,14 +115,6 @@ public class FichierCave {
         this.tauxEnrichissement = tauxEnrichissement;
     }
 
-    public String getCheminFichierOriginal() {
-        return cheminFichierOriginal;
-    }
-
-    public void setCheminFichierOriginal(String cheminFichierOriginal) {
-        this.cheminFichierOriginal = cheminFichierOriginal;
-    }
-
     public String getCheminFichierEnrichi() {
         return cheminFichierEnrichi;
     }
@@ -154,7 +149,6 @@ public class FichierCave {
         this.vehicule = vehicule;
         this.statutEnrichissement = statutEnrichissement;
         this.tauxEnrichissement = tauxEnrichissement;
-        this.cheminFichierOriginal = cheminFichierOriginal;
         this.cheminFichierEnrichi = cheminFichierEnrichi;
         this.region = region;
         this.frequentations = frequentations;

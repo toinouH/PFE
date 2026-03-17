@@ -1,13 +1,5 @@
 package fr.univlyon3.sncf.transverse;
 
-import fr.univlyon3.sncf.models.FichierCave;
-import fr.univlyon3.sncf.models.Region;
-import fr.univlyon3.sncf.repositories.FichierCaveRepository;
-import fr.univlyon3.sncf.repositories.RegionRepository;
-import jakarta.annotation.Resource;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -23,6 +15,15 @@ import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.springframework.stereotype.Component;
+
+import fr.univlyon3.sncf.models.FichierCave;
+import fr.univlyon3.sncf.models.Region;
+import fr.univlyon3.sncf.repositories.FichierCaveRepository;
+import fr.univlyon3.sncf.repositories.RegionRepository;
+import fr.univlyon3.sncf.services.FrequentationGareService;
+import jakarta.annotation.Resource;
+
 @Component("xmlWritter")
 public class XMLWritter {
 
@@ -32,6 +33,8 @@ public class XMLWritter {
     private FichierCaveRepository fichierCaveRepository;
     @Resource(name = "regionRepository")
     private RegionRepository regionRepository;
+    @Resource(name = "frequentationGareService")
+    private FrequentationGareService frequentationGareService;
 
     public void enrichirXML(String inputXmlPath, String outputXmlPath) throws IOException {
         List<XMLReader.StopData> stops = reader.lireStops(inputXmlPath);
@@ -76,25 +79,35 @@ public class XMLWritter {
         Files.createDirectories(outputPath.getParent());
         Files.writeString(outputPath, enrichedContent.toString());
 
-        enregistrerEnBase(inputXmlPath, outputPath.toString());
+        enregistrerEnBase(inputXmlPath, outputPath.toString(),stops);
     }
 
-    private void enregistrerEnBase(String inputXmlPath, String outputXmlPath) {
+    private void enregistrerEnBase(String inputXmlPath, String outputXmlPath, List<XMLReader.StopData> stops) {
         String nomFichier = Paths.get(inputXmlPath).getFileName().toString();
         Regions regionEnum = reader.extraireRegionDepuisNomFichier(nomFichier);
 
         Optional<Region> regionOpt = regionRepository.findByTrigramme(regionEnum.name());
-        if (regionOpt.isPresent()) {
-            FichierCave fichierCave = new FichierCave();
+        if (regionOpt.isEmpty()) {
+            System.out.println("Région introuvable pour le fichier : " + nomFichier);
+            return;
+        }
+
+        FichierCave fichierCave;
+
+        Optional<FichierCave> fichierExistant = fichierCaveRepository.findByNomFichier(nomFichier);
+
+        if (fichierExistant.isPresent()) {
+            fichierCave = fichierExistant.get();
+            System.out.println("Fichier déjà présent en base : " + fichierCave.getNomFichier());
+        } else {
+            fichierCave = new FichierCave();
             fichierCave.setNomFichier(nomFichier);
             fichierCave.setDateReception(LocalDateTime.now());
-            fichierCave.setCheminFichierOriginal(inputXmlPath);
             fichierCave.setCheminFichierEnrichi(outputXmlPath);
             fichierCave.setRegion(regionOpt.get());
             fichierCave.setStatutEnrichissement("ENRICHI");
-            fichierCave.setTauxEnrichissement(100.0f); // Valeur par défaut simplifiée  // TODO Trouver une formule de calcul
+            fichierCave.setTauxEnrichissement(100.0);
 
-            // Extraction des métadonnées du nom de fichier : FichierCAVE_AQU_X12345_29062022.xml
             Pattern pattern = Pattern.compile("FichierCAVE_[A-Z]{3}_([^_]+)_(\\d{8})\\.xml");
             Matcher matcher = pattern.matcher(nomFichier);
             if (matcher.matches()) {
@@ -103,13 +116,16 @@ public class XMLWritter {
                 LocalDate dateCourse = LocalDate.parse(dateStr, DateTimeFormatter.ofPattern("ddMMyyyy"));
                 fichierCave.setDateCourse(dateCourse);
             } else {
-                // Valeurs par défaut si le pattern ne correspond pas
                 fichierCave.setVehicule("INCONNU");
                 fichierCave.setDateCourse(LocalDate.now());
             }
 
-            fichierCaveRepository.save(fichierCave);
+            fichierCave = fichierCaveRepository.save(fichierCave);
+            System.out.println("FichierCave enregistré : " + fichierCave.getNomFichier());
         }
+
+        frequentationGareService.alimenterDepuisStops(fichierCave, stops);
+        System.out.println("Fréquentations enregistrées pour : " + fichierCave.getNomFichier());
     }
 
     private Path construireCheminSortie(String inputXmlPath, String outputXmlPath) {
