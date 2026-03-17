@@ -1,6 +1,7 @@
 package fr.univlyon3.sncf.transverse;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
@@ -8,11 +9,14 @@ import org.w3c.dom.NodeList;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+@Component("xmlReader")
 public class XMLReader {
 
     @Value("${path.fichierReferentielGares}")
@@ -30,7 +34,7 @@ public class XMLReader {
     public List<StopData> lireStops(String cheminFichier) {
         List<StopData> stops = new ArrayList<>();
 
-        try (InputStream inputStream = getClass().getClassLoader().getResourceAsStream(cheminFichier)) {
+        try (InputStream inputStream = Files.newInputStream(Paths.get(cheminFichier))) {
             if (inputStream == null) {
                 throw new IllegalArgumentException("Fichier XML introuvable : " + cheminFichier);
             }

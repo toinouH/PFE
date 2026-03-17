@@ -1,8 +1,11 @@
 package fr.univlyon3.sncf.repositories;
 
-import fr.univlyon3.sncf.models.FichierCave;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import fr.univlyon3.sncf.models.FichierCave;
+import org.springframework.stereotype.Repository;
+
+@Repository("fichierCaveRepository")
 public interface FichierCaveRepository extends JpaRepository<FichierCave, Integer> {
     boolean existsByNomFichier(String nomFichier);
 }
