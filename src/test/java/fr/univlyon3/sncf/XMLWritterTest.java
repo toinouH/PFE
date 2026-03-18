@@ -2,12 +2,12 @@ package fr.univlyon3.sncf;
 
 import fr.univlyon3.sncf.repositories.FichierCaveRepository;
 import fr.univlyon3.sncf.repositories.RegionRepository;
+import fr.univlyon3.sncf.transverse.NearestStations;
 import fr.univlyon3.sncf.transverse.Regions;
 import fr.univlyon3.sncf.transverse.XMLReader;
 import fr.univlyon3.sncf.transverse.XMLWritter;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -15,14 +15,14 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 public class XMLWritterTest {
 
@@ -30,6 +30,7 @@ public class XMLWritterTest {
     private FichierCaveRepository fichierCaveRepository;
     private RegionRepository regionRepository;
     private XMLWritter writter;
+    private NearestStations nearestStationsGenerator;
 
     @BeforeEach
     void setUp() {
@@ -37,7 +38,7 @@ public class XMLWritterTest {
         fichierCaveRepository = mock(FichierCaveRepository.class);
         regionRepository = mock(RegionRepository.class);
         writter = mock(XMLWritter.class);
-        /*writter = new XMLWritter(reader, fichierCaveRepository, regionRepository);*/
+        nearestStationsGenerator = mock(NearestStations.class);
     }
 
     @Test

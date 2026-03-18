@@ -9,10 +9,10 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>fr.univ-lyon3</groupId>
-    <artifactId>SNCF</artifactId>
+    <artifactId>railflow</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>SNCF</name>
-    <description>SNCF</description>
+    <name>sncf</name>
+    <description>Railflow</description>
     <url/>
     <licenses>
         <license/>
@@ -60,7 +60,6 @@
         <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
-            <scope>runtime</scope>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>

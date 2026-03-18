@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
+import java.util.stream.Stream;
 
 @Service("enrichissementExportFichier")
 public class EnrichissementExportFichierImpl implements EnrichissementExportFichier {
@@ -43,6 +44,12 @@ public class EnrichissementExportFichierImpl implements EnrichissementExportFich
                     fichier.toAbsolutePath().toString(),
                     dossierCAVEnrichisTries.toAbsolutePath().toString()
             );
+        }
+
+        try (Stream<Path> stream = Files.list(dossierEntreesCAV)) {
+            for (Path fichier : stream.filter(Files::isRegularFile).toList()) {
+                Files.delete(fichier);
+            }
         }
     }
 }

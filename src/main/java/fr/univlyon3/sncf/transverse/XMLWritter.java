@@ -38,7 +38,6 @@ public class XMLWritter {
 
     public void enrichirXML(String inputXmlPath, String outputXmlPath) throws IOException {
         List<XMLReader.StopData> stops = reader.lireStops(inputXmlPath);
-        NearestStations nearestStationsGenerator = new NearestStations();
 
         String content;
         try (InputStream inputStream = Files.newInputStream(Paths.get(inputXmlPath))) {
@@ -56,7 +55,10 @@ public class XMLWritter {
 
         StringBuilder enrichedContent = new StringBuilder();
         int lastPos = 0;
-        for (int i = 0; i < stops.size() - 1; i++) {
+        counter = 0;                // A chaque fichier il faut reinitialiser le compteur à 0
+        counterenrichi = 0;
+        tauxEnrichissement = 0.0f;
+        for (int i = 0; i < stops.size() -1 ; i++) {
             XMLReader.StopData currentStop = stops.get(i);
             String stopTag = "</Stop>";
             int stopEndIndex = content.indexOf(stopTag, lastPos) + stopTag.length();
@@ -66,12 +68,15 @@ public class XMLWritter {
             String xmlToInsert = nearestStationsGenerator.generateNearestStationsXML(
                     currentStop.latitude(), currentStop.longitude()
             );
+            counter++;
             if (!xmlToInsert.isEmpty()) {
                 enrichedContent.append("\n").append(xmlToInsert);
+                counterenrichi++;
             }
 
             lastPos = stopEndIndex;
         }
+        calculerTauxEnrichissement(counterenrichi, counter);
 
         enrichedContent.append(content.substring(lastPos));
 
@@ -136,4 +141,29 @@ public class XMLWritter {
 
         return dossierSortie.resolve(region.name()).resolve(nomFichierSortie);
     }
+
+    public int getCounter() {
+        return counter;
+    }
+
+    public void setCounter(int counter) {
+        this.counter = counter;
+    }
+
+    public float getTauxEnrichissement() {
+        return tauxEnrichissement;
+    }
+
+    public void setTauxEnrichissement(float tauxEnrichissement) {
+        this.tauxEnrichissement = tauxEnrichissement;
+    }
+
+    public int getCounterenrichi() {
+        return counterenrichi;
+    }
+
+    public void setCounterenrichi(int counterenrichi) {
+        this.counterenrichi = counterenrichi;
+    }
+
 }

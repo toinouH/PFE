@@ -1,16 +1,15 @@
 package fr.univlyon3.sncf.models;
 
-/**
- *
- * @author Faquira
- */
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
+/**
+ *
+ * @author Faquira
+ */
 @Entity
 public class Gestionnaire {
 

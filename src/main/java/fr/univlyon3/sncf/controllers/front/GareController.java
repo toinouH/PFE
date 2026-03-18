@@ -1,4 +1,4 @@
-package fr.univlyon3.sncf.controllers;
+package fr.univlyon3.sncf.controllers.front;
 
 import fr.univlyon3.sncf.repositories.GareRepository;
 import fr.univlyon3.sncf.services.ReferentielGareService;
@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-@Controller
+@Controller("gareController")
 public class GareController {
 
     private final GareRepository gareRepository;
