@@ -1,4 +1,4 @@
-package fr.univlyon3.sncf.controllers;
+package fr.univlyon3.sncf.controllers.front;
 
 import fr.univlyon3.sncf.repositories.FrequentationGareRepository;
 import jakarta.servlet.http.HttpSession;
@@ -6,7 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
-@Controller
+@Controller("frequentationGareController")
 public class FrequentationGareController {
 
     private final FrequentationGareRepository frequentationGareRepository;

@@ -7,9 +7,13 @@ import tools.jackson.core.type.TypeReference;
 import tools.jackson.databind.ObjectMapper;
 
 import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Stream;
 
 @Component("localisation")
 public class Localisation implements LocalisationService {
@@ -17,7 +21,7 @@ public class Localisation implements LocalisationService {
     private static final double RAYON_TERRE_KM = 6371.0D;
 
     @Value("${distance.maxkm}")
-    private double DISTANCE_MAX_KM = 500.0D;    // La valeur par défaut est de 500.00km
+    private double DISTANCE_MAX_KM /*= 500.0D*/;    // La valeur par défaut est de 500.00km
 
     public double DISTANCE_MAX_KM() {
         return DISTANCE_MAX_KM;
@@ -33,8 +37,10 @@ public class Localisation implements LocalisationService {
     public List<Gare> getGaresDansUnRayonDe500Km(double latitude, double longitude) {
         List<GareDistance> garesDansLeRayon = new ArrayList<>();
 
-        try (InputStream inputStream = getClass().getClassLoader().getResourceAsStream(SOURCE_FICHIER_JSON)) {
+        Path configuredPath = Paths.get(SOURCE_FICHIER_JSON);
+        Path jsonPath = resoudreFichierJson(configuredPath);
 
+        try (InputStream inputStream = Files.newInputStream(jsonPath)) {
             if (inputStream == null) {
                 throw new IllegalArgumentException("Fichier source JSON introuvable.");
             }
@@ -93,5 +99,30 @@ public class Localisation implements LocalisationService {
 
     /// Mapping d'une gare et de la distance qui la sépare avec un point
     private record GareDistance(Gare gare, double distance) {}
+
+
+    private Path resoudreFichierJson(Path configuredPath) {
+        try {
+            if (Files.isRegularFile(configuredPath)) {
+                return configuredPath;
+            }
+
+            if (!Files.isDirectory(configuredPath)) {
+                throw new IllegalArgumentException("Le chemin configuré n'est ni un fichier ni un dossier : " + configuredPath);
+            }
+
+            try (Stream<Path> stream = Files.list(configuredPath)) {
+                return stream
+                        .filter(Files::isRegularFile)
+                        .filter(p -> p.getFileName().toString().toLowerCase().endsWith(".json"))
+                        .sorted(Comparator.comparing(p -> p.getFileName().toString()))
+                        .findFirst()
+                        .orElseThrow(() -> new IllegalArgumentException(
+                                "Aucun fichier JSON trouvé dans le dossier : " + configuredPath));
+            }
+        } catch (Exception e) {
+            throw new RuntimeException("Impossible de résoudre le fichier JSON depuis : " + configuredPath, e);
+        }
+    }
 
 }

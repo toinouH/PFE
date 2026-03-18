@@ -1,4 +1,4 @@
-package fr.univlyon3.sncf.controllers;
+package fr.univlyon3.sncf.controllers.front;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,7 +13,7 @@ import fr.univlyon3.sncf.services.EnrichissementExportFichier;
 import fr.univlyon3.sncf.services.FichierUploadService;
 import jakarta.servlet.http.HttpSession;
 
-@Controller
+@Controller("fichierCaveController")
 public class FichierCaveController {
 
     private final FichierCaveRepository fichierCaveRepository;
@@ -85,10 +85,7 @@ public class FichierCaveController {
     }
 
     @PostMapping("/fichiers/enrichir")
-    public String enrichirEtEnvoyer(
-            HttpSession session,
-            RedirectAttributes redirectAttributes
-    ) {
+    public String enrichirEtEnvoyer(HttpSession session, RedirectAttributes redirectAttributes) {
         if (session.getAttribute("gestionnaireConnecte") == null) {
             return "redirect:/login";
         }

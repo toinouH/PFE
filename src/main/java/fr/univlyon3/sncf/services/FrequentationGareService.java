@@ -2,6 +2,7 @@ package fr.univlyon3.sncf.services;
 
 import java.util.List;
 
+import fr.univlyon3.sncf.transverse.LocalisationService;
 import org.springframework.stereotype.Service;
 
 import fr.univlyon3.sncf.models.FichierCave;
@@ -17,17 +18,21 @@ public class FrequentationGareService {
 
     private final FrequentationGareRepository frequentationGareRepository;
     private final GareRepository gareRepository;
+    private final LocalisationService localisation;
 
     public FrequentationGareService(
             FrequentationGareRepository frequentationGareRepository,
-            GareRepository gareRepository
+            GareRepository gareRepository,
+            LocalisationService localisation
+
     ) {
         this.frequentationGareRepository = frequentationGareRepository;
         this.gareRepository = gareRepository;
+        this.localisation = localisation;
     }
 
     public void alimenterDepuisStops(FichierCave fichierCave, List<XMLReader.StopData> stops) {
-        Localisation localisation = new Localisation();
+
 
         for (XMLReader.StopData stop : stops) {
             List<Gare> garesProches = localisation.getGaresDansUnRayonDe500Km(

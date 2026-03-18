@@ -24,8 +24,13 @@ import fr.univlyon3.sncf.repositories.RegionRepository;
 import fr.univlyon3.sncf.services.FrequentationGareService;
 import jakarta.annotation.Resource;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 @Component("xmlWritter")
 public class XMLWritter {
+
+    private static final Logger LOGGER = LogManager.getLogger(XMLWritter.class);
 
     @Resource(name = "xmlReader")
     private XMLReader reader;
@@ -33,8 +38,14 @@ public class XMLWritter {
     private FichierCaveRepository fichierCaveRepository;
     @Resource(name = "regionRepository")
     private RegionRepository regionRepository;
+    @Resource(name = "nearestStations")
+    private NearestStations nearestStationsGenerator;
     @Resource(name = "frequentationGareService")
     private FrequentationGareService frequentationGareService;
+
+    private int counter;
+    private int counterenrichi;
+    private float tauxEnrichissement;
 
     public void enrichirXML(String inputXmlPath, String outputXmlPath) throws IOException {
         List<XMLReader.StopData> stops = reader.lireStops(inputXmlPath);
@@ -87,13 +98,18 @@ public class XMLWritter {
         enregistrerEnBase(inputXmlPath, outputPath.toString(),stops);
     }
 
+
+    private void calculerTauxEnrichissement(int counterenrichi, int counter) {
+        this.tauxEnrichissement = (float) counterenrichi / counter * 100;
+    }
+
     private void enregistrerEnBase(String inputXmlPath, String outputXmlPath, List<XMLReader.StopData> stops) {
         String nomFichier = Paths.get(inputXmlPath).getFileName().toString();
         Regions regionEnum = reader.extraireRegionDepuisNomFichier(nomFichier);
 
         Optional<Region> regionOpt = regionRepository.findByTrigramme(regionEnum.name());
         if (regionOpt.isEmpty()) {
-            System.out.println("Région introuvable pour le fichier : " + nomFichier);
+            LOGGER.error("Région introuvable pour le fichier : " + nomFichier);
             return;
         }
 
@@ -103,16 +119,26 @@ public class XMLWritter {
 
         if (fichierExistant.isPresent()) {
             fichierCave = fichierExistant.get();
-            System.out.println("Fichier déjà présent en base : " + fichierCave.getNomFichier());
+            LOGGER.warn("Fichier déjà présent en base : " + fichierCave.getNomFichier());
         } else {
             fichierCave = new FichierCave();
             fichierCave.setNomFichier(nomFichier);
             fichierCave.setDateReception(LocalDateTime.now());
             fichierCave.setCheminFichierEnrichi(outputXmlPath);
             fichierCave.setRegion(regionOpt.get());
-            fichierCave.setStatutEnrichissement("ENRICHI");
-            fichierCave.setTauxEnrichissement(100.0);
 
+            // On pourrait mettre ça dans un enum
+            if (getTauxEnrichissement() == 0.0f) {
+                fichierCave.setStatutEnrichissement("NON ENRICHI");
+            } else if (getTauxEnrichissement() < 100.0f) {
+                fichierCave.setStatutEnrichissement("PARTIELLEMENT ENRICHI");
+            } else {    // Pas besoin de check pour 100% c'est déjà le cas si l'on arrive ici
+                fichierCave.setStatutEnrichissement("ENRICHI");
+            }
+
+            fichierCave.setTauxEnrichissement(getTauxEnrichissement());
+
+            // Extraction des métadonnées du nom de fichier : FichierCAVE_AQU_X12345_29062022.xml
             Pattern pattern = Pattern.compile("FichierCAVE_[A-Z]{3}_([^_]+)_(\\d{8})\\.xml");
             Matcher matcher = pattern.matcher(nomFichier);
             if (matcher.matches()) {
@@ -126,11 +152,11 @@ public class XMLWritter {
             }
 
             fichierCave = fichierCaveRepository.save(fichierCave);
-            System.out.println("FichierCave enregistré : " + fichierCave.getNomFichier());
+            LOGGER.info("FichierCave enregistré : " + fichierCave.getNomFichier());
         }
 
         frequentationGareService.alimenterDepuisStops(fichierCave, stops);
-        System.out.println("Fréquentations enregistrées pour : " + fichierCave.getNomFichier());
+        LOGGER.info("Fréquentations enregistrées pour : " + fichierCave.getNomFichier());
     }
 
     private Path construireCheminSortie(String inputXmlPath, String outputXmlPath) {
