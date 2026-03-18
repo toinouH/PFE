@@ -1,11 +1,11 @@
-package fr.univlyon3.sncf.controllers;
+package fr.univlyon3.sncf.controllers.front;
 
-import fr.univlyon3.sncf.services.GareService;
 import fr.univlyon3.sncf.models.Gestionnaire;
+import fr.univlyon3.sncf.services.GareService;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import jakarta.servlet.http.HttpSession;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller("gareController")

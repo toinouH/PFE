@@ -2,6 +2,7 @@ package fr.univlyon3.sncf.transverse;
 
 import fr.univlyon3.sncf.models.Gare;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 import tools.jackson.core.type.TypeReference;
 import tools.jackson.databind.ObjectMapper;
 
@@ -10,12 +11,17 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
+@Component("localisation")
 public class Localisation implements LocalisationService {
 
     private static final double RAYON_TERRE_KM = 6371.0D;
 
     @Value("${distance.maxkm}")
     private double DISTANCE_MAX_KM = 500.0D;    // La valeur par défaut est de 500.00km
+
+    public double DISTANCE_MAX_KM() {
+        return DISTANCE_MAX_KM;
+    }
 
     // Dans un monde idéal on peut paramétrer la localisation du fichier plus que ça
     // Si la clef existe dans la configuration elle passe par dessus la valeur par défaut

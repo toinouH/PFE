@@ -5,7 +5,6 @@ import fr.univlyon3.sncf.models.Region;
 import fr.univlyon3.sncf.repositories.FichierCaveRepository;
 import fr.univlyon3.sncf.repositories.RegionRepository;
 import jakarta.annotation.Resource;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.io.ByteArrayOutputStream;
@@ -32,10 +31,15 @@ public class XMLWritter {
     private FichierCaveRepository fichierCaveRepository;
     @Resource(name = "regionRepository")
     private RegionRepository regionRepository;
+    @Resource(name = "nearestStations")
+    private NearestStations nearestStationsGenerator;
+
+    private int counter;
+    private int counterenrichi;
+    private float tauxEnrichissement;
 
     public void enrichirXML(String inputXmlPath, String outputXmlPath) throws IOException {
         List<XMLReader.StopData> stops = reader.lireStops(inputXmlPath);
-        NearestStations nearestStationsGenerator = new NearestStations();
 
         String content;
         try (InputStream inputStream = Files.newInputStream(Paths.get(inputXmlPath))) {
@@ -53,7 +57,10 @@ public class XMLWritter {
 
         StringBuilder enrichedContent = new StringBuilder();
         int lastPos = 0;
-        for (int i = 0; i < stops.size() - 1; i++) {
+        counter = 0;                // A chaque fichier il faut reinitialiser le compteur à 0
+        counterenrichi = 0;
+        tauxEnrichissement = 0.0f;
+        for (int i = 0; i < stops.size(); i++) {
             XMLReader.StopData currentStop = stops.get(i);
             String stopTag = "</Stop>";
             int stopEndIndex = content.indexOf(stopTag, lastPos) + stopTag.length();
@@ -63,12 +70,15 @@ public class XMLWritter {
             String xmlToInsert = nearestStationsGenerator.generateNearestStationsXML(
                     currentStop.latitude(), currentStop.longitude()
             );
+            counter++;
             if (!xmlToInsert.isEmpty()) {
                 enrichedContent.append("\n").append(xmlToInsert);
+                counterenrichi++;
             }
 
             lastPos = stopEndIndex;
         }
+        calculerTauxEnrichissement(counterenrichi, counter);
 
         enrichedContent.append(content.substring(lastPos));
 
@@ -77,6 +87,11 @@ public class XMLWritter {
         Files.writeString(outputPath, enrichedContent.toString());
 
         enregistrerEnBase(inputXmlPath, outputPath.toString());
+    }
+
+
+    private void calculerTauxEnrichissement(int counterenrichi, int counter) {
+        this.tauxEnrichissement = (float) counterenrichi / counter * 100;
     }
 
     private void enregistrerEnBase(String inputXmlPath, String outputXmlPath) {
@@ -91,8 +106,17 @@ public class XMLWritter {
             fichierCave.setCheminFichierOriginal(inputXmlPath);
             fichierCave.setCheminFichierEnrichi(outputXmlPath);
             fichierCave.setRegion(regionOpt.get());
-            fichierCave.setStatutEnrichissement("ENRICHI");
-            fichierCave.setTauxEnrichissement(100.0f); // Valeur par défaut simplifiée  // TODO Trouver une formule de calcul
+
+            // On pourrait mettre ça dans un enum
+            if (getTauxEnrichissement() == 0.0f) {
+                fichierCave.setStatutEnrichissement("NON ENRICHI");
+            } else if (getTauxEnrichissement() < 100.0f) {
+                fichierCave.setStatutEnrichissement("PARTIELLEMENT ENRICHI");
+            } else {    // Pas besoin de check pour 100% c'est déjà le cas si l'on arrive ici
+                fichierCave.setStatutEnrichissement("ENRICHI");
+            }
+
+            fichierCave.setTauxEnrichissement(getTauxEnrichissement());
 
             // Extraction des métadonnées du nom de fichier : FichierCAVE_AQU_X12345_29062022.xml
             Pattern pattern = Pattern.compile("FichierCAVE_[A-Z]{3}_([^_]+)_(\\d{8})\\.xml");
@@ -120,4 +144,29 @@ public class XMLWritter {
 
         return dossierSortie.resolve(region.name()).resolve(nomFichierSortie);
     }
+
+    public int getCounter() {
+        return counter;
+    }
+
+    public void setCounter(int counter) {
+        this.counter = counter;
+    }
+
+    public float getTauxEnrichissement() {
+        return tauxEnrichissement;
+    }
+
+    public void setTauxEnrichissement(float tauxEnrichissement) {
+        this.tauxEnrichissement = tauxEnrichissement;
+    }
+
+    public int getCounterenrichi() {
+        return counterenrichi;
+    }
+
+    public void setCounterenrichi(int counterenrichi) {
+        this.counterenrichi = counterenrichi;
+    }
+
 }

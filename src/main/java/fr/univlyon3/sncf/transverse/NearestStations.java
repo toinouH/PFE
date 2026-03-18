@@ -1,6 +1,8 @@
 package fr.univlyon3.sncf.transverse;
 
 import fr.univlyon3.sncf.models.Gare;
+import jakarta.annotation.Resource;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +19,11 @@ import java.util.List;
 /// <Stop>
 /// ...
 /// ```
+@Component("nearestStations")
 public class NearestStations {
+
+    @Resource(name = "localisation")
+    private LocalisationService localisation;
 
     public String generateNearestStationsXML(double latitude, double longitude) {
         List<NearestStation> nearestStations = toGare(latitude, longitude);
@@ -38,7 +44,6 @@ public class NearestStations {
     }
 
     private List<NearestStation> toGare(double latitude, double longitude) {
-        Localisation localisation = new Localisation();
         List<Gare> gares = localisation.getGaresDansUnRayonDe500Km(latitude, longitude);
         List<NearestStation> nearestStations = new ArrayList<>();
         for (int i = 0; i < gares.size() ; i++) {
