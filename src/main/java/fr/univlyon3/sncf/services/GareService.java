@@ -14,7 +14,7 @@ import java.util.List;
 public class GareService {
 
     @Value("${path.fichierReferentielGares}")
-    private static final String SOURCE_FICHIER_JSON = "input/Référentiel_stations_transverses.json";
+    private final String SOURCE_FICHIER_JSON = "input/Référentiel_stations_transverses.json";
 
     public List<Gare> getAllGares() {
         try (InputStream inputStream = getClass().getClassLoader().getResourceAsStream(SOURCE_FICHIER_JSON)) {

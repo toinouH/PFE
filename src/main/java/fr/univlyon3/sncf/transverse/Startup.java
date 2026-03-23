@@ -47,11 +47,11 @@ public class Startup implements CommandLineRunner {
             if (Files.notExists(path)) {
                 Files.createDirectories(path);
                 if (LOGGER.isWarnEnabled()) {
-                    LOGGER.warn("Dossier créé : " + path.toAbsolutePath());
+                    LOGGER.warn("Dossier créé : {}", path.toAbsolutePath());
                 }
             } else {
                 if (LOGGER.isInfoEnabled()) {
-                    LOGGER.info("Le dossier existe déjà : " + path.toAbsolutePath());
+                    LOGGER.info("Le dossier existe déjà : {}", path.toAbsolutePath());
                 }
             }
         } else {

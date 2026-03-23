@@ -46,6 +46,7 @@ public class Gare {
     private List<FrequentationGare> frequentations;
 
     public Gare() {
+        // This is needed by JPA
     }
 
     public Integer getId() {

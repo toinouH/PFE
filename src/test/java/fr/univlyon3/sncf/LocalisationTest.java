@@ -16,7 +16,7 @@ class LocalisationTest {
 
     @Test
     void returnsExpectedNearbyStationsAroundLyonPartDieu() {
-        List<Gare> result = localisation.getGaresDansUnRayonDe500Km(45.76059597, 4.85940903);
+        List<Gare> result = localisation.getGaresDansUnRayon(45.76059597, 4.85940903, null);
 
         assertEquals(6, result.size());
         assertTrue(result.stream().anyMatch(gare -> gare.getLabel().equals("Lyon Part Dieu")));
@@ -27,14 +27,14 @@ class LocalisationTest {
 
     @Test
     void returnsStationItselfWhenCoordinatesMatchExactly() {
-        List<Gare> result = localisation.getGaresDansUnRayonDe500Km(43.302666, 5.380407);
+        List<Gare> result = localisation.getGaresDansUnRayon(43.302666, 5.380407, null);
 
         assertTrue(result.stream().anyMatch(gare -> gare.getLabel().equals("Marseille Saint-Charles")));
     }
 
     @Test
     void returnsNoStationWhenCoordinatesAreTooFarFromFrance() {
-        List<Gare> result = localisation.getGaresDansUnRayonDe500Km(0.0, 0.0);
+        List<Gare> result = localisation.getGaresDansUnRayon(0.0, 0.0, null);
 
         assertTrue(result.isEmpty());
     }

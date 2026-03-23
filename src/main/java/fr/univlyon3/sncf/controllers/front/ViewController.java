@@ -81,4 +81,11 @@ public class ViewController {
         return "dashboard";
     }
 
+    /// Redirige le 8080 vers un url de l'application supporté
+    /// Si l'utilisateur n'est pas connecté, il est redirigé vers la page de [ViewController#login]
+    @GetMapping("/")
+    public String redirectionDashboard() {
+        return "redirect:/dashboard";
+    }
+
 }

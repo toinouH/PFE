@@ -7,10 +7,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
-
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.w3c.dom.Document;
@@ -19,6 +19,8 @@ import org.w3c.dom.NodeList;
 
 @Component("xmlReader")
 public class XMLReader {
+
+    private static final Logger LOGGER = LogManager.getLogger(XMLReader.class);
 
     @Value("${path.fichierReferentielGares}")
     private String cheminFichier;
@@ -59,7 +61,12 @@ public class XMLReader {
                 double latitude = Double.parseDouble(gpsElement.getAttribute("latitude"));
                 double longitude = Double.parseDouble(gpsElement.getAttribute("longitude"));
 
-                int adultsIn = 0, adultsOut = 0, bikesIn = 0, bikesOut = 0, wheelchairsIn = 0, wheelchairsOut = 0;
+                int adultsIn = 0;
+                int adultsOut = 0;
+                int bikesIn = 0;
+                int bikesOut = 0;
+                int wheelchairsIn = 0;
+                int wheelchairsOut = 0;
 
                 NodeList countNodes = stopElement.getElementsByTagName("Count");
                 for (int j = 0; j < countNodes.getLength(); j++) {
@@ -69,18 +76,20 @@ public class XMLReader {
                     int out = Integer.parseInt(countElement.getAttribute("out"));
 
                     switch (type) {
-                        case "adults":
+                        case "adults" -> {
                             adultsIn += in;
                             adultsOut += out;
-                            break;
-                        case "bikes":
+                        }
+                        case "bikes" -> {
                             bikesIn += in;
                             bikesOut += out;
-                            break;
-                        case "wheelchairs":
+                        }
+                        case "wheelchairs" -> {
                             wheelchairsIn += in;
                             wheelchairsOut += out;
-                            break;
+                        }
+                        default -> LOGGER.error("Type inconnu : {}", type);
+
                     }
                 }
 

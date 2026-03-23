@@ -26,7 +26,7 @@ public class EnrichissementExportFichierImpl implements EnrichissementExportFich
         this.xmlWritter = xmlWritter;
     }
 
-    public void enrichirEtArchiverFichiers() throws IOException {
+    public void enrichirEtArchiverFichiers(Double distanceMaxKm) throws IOException {
         if (Files.notExists(dossierEntreesCAV) || !Files.isDirectory(dossierEntreesCAV)) {
             throw new IOException("Le dossier d'entrée est introuvable : " + dossierEntreesCAV.toAbsolutePath());
         }
@@ -42,7 +42,8 @@ public class EnrichissementExportFichierImpl implements EnrichissementExportFich
         for (Path fichier : fichiersXml) {
             xmlWritter.enrichirXML(
                     fichier.toAbsolutePath().toString(),
-                    dossierCAVEnrichisTries.toAbsolutePath().toString()
+                    dossierCAVEnrichisTries.toAbsolutePath().toString(),
+                    distanceMaxKm
             );
         }
 

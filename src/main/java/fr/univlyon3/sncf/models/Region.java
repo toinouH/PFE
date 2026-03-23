@@ -31,6 +31,7 @@ public class Region {
     private List<FichierCave> fichiers;
 
     public Region() {
+        // This is needed by JPA
     }
 
     public Integer getId() {

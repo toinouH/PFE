@@ -1,6 +1,8 @@
 package fr.univlyon3.sncf.services;
 
 import java.util.List;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import org.springframework.stereotype.Service;
 
@@ -12,8 +14,10 @@ import fr.univlyon3.sncf.repositories.GareRepository;
 import fr.univlyon3.sncf.transverse.LocalisationService;
 import fr.univlyon3.sncf.transverse.XMLReader;
 
-@Service
+@Service("frequentationGareService")
 public class FrequentationGareService {
+
+    private static final Logger LOGGER = LogManager.getLogger(FrequentationGareService.class);
 
     private final FrequentationGareRepository frequentationGareRepository;
     private final GareRepository gareRepository;
@@ -22,21 +26,20 @@ public class FrequentationGareService {
     public FrequentationGareService(
             FrequentationGareRepository frequentationGareRepository,
             GareRepository gareRepository,
-            LocalisationService localisation
-
-    ) {
+            LocalisationService localisation) {
         this.frequentationGareRepository = frequentationGareRepository;
         this.gareRepository = gareRepository;
         this.localisation = localisation;
     }
 
-    public void alimenterDepuisStops(FichierCave fichierCave, List<XMLReader.StopData> stops) {
+    public void alimenterDepuisStops(FichierCave fichierCave, List<XMLReader.StopData> stops, Double distanceMaxKm) {
 
 
         for (XMLReader.StopData stop : stops) {
-            List<Gare> garesProches = localisation.getGaresDansUnRayonDe500Km(
+            List<Gare> garesProches = localisation.getGaresDansUnRayon(
                     stop.latitude(),
-                    stop.longitude()
+                    stop.longitude(),
+                    distanceMaxKm
             );
 
             if (garesProches == null || garesProches.isEmpty()) {
@@ -49,7 +52,7 @@ public class FrequentationGareService {
                     .orElse(null);
 
             if (gareEnBase == null) {
-                System.out.println("Gare absente de la base : " + gareTrouvee.getShortLabel());
+                LOGGER.info("Gare absente de la base : {} ", gareTrouvee.getShortLabel());
                 continue;
             }
 
@@ -63,7 +66,7 @@ public class FrequentationGareService {
                     );
 
             if (existe) {
-                System.out.println("Fréquentation déjà présente pour : " + gareEnBase.getShortLabel());
+                LOGGER.info("Fréquentation déjà présente pour : {} ", gareEnBase.getShortLabel());
                 continue;
             }
 

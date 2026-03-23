@@ -46,7 +46,7 @@ public class XMLWritter {
     private int counterenrichi;
     private float tauxEnrichissement;
 
-    public void enrichirXML(String inputXmlPath, String outputXmlPath) throws IOException {
+    public void enrichirXML(String inputXmlPath, String outputXmlPath, Double distanceMaxKm) throws IOException {
         List<XMLReader.StopData> stops = reader.lireStops(inputXmlPath);
 
         String content;
@@ -76,7 +76,7 @@ public class XMLWritter {
             enrichedContent.append(content, lastPos, stopEndIndex);
 
             String xmlToInsert = nearestStationsGenerator.generateNearestStationsXML(
-                    currentStop.latitude(), currentStop.longitude()
+                    currentStop.latitude(), currentStop.longitude(), distanceMaxKm
             );
             counter++;
             if (!xmlToInsert.isEmpty()) {
@@ -94,7 +94,7 @@ public class XMLWritter {
         Files.createDirectories(outputPath.getParent());
         Files.writeString(outputPath, enrichedContent.toString());
 
-        enregistrerEnBase(inputXmlPath, outputPath.toString(),stops);
+        enregistrerEnBase(inputXmlPath, outputPath.toString(), stops, distanceMaxKm);
     }
 
 
@@ -102,13 +102,13 @@ public class XMLWritter {
         this.tauxEnrichissement = (float) counterenrichi / counter * 100;
     }
 
-    private void enregistrerEnBase(String inputXmlPath, String outputXmlPath, List<XMLReader.StopData> stops) {
+    private void enregistrerEnBase(String inputXmlPath, String outputXmlPath, List<XMLReader.StopData> stops, Double distanceMaxKm) {
         String nomFichier = Paths.get(inputXmlPath).getFileName().toString();
         Regions regionEnum = reader.extraireRegionDepuisNomFichier(nomFichier);
 
         Optional<Region> regionOpt = regionRepository.findByTrigramme(regionEnum.name());
         if (regionOpt.isEmpty()) {
-            LOGGER.error("Région introuvable pour le fichier : " + nomFichier);
+            LOGGER.error("Région introuvable pour le fichier : {}", nomFichier);
             return;
         }
 
@@ -118,7 +118,7 @@ public class XMLWritter {
 
         if (fichierExistant.isPresent()) {
             fichierCave = fichierExistant.get();
-            LOGGER.warn("Fichier déjà présent en base : " + fichierCave.getNomFichier());
+            LOGGER.warn("Fichier déjà présent en base : {}", fichierCave.getNomFichier());
         } else {
             fichierCave = new FichierCave();
             fichierCave.setNomFichier(nomFichier);
@@ -151,11 +151,11 @@ public class XMLWritter {
             }
 
             fichierCave = fichierCaveRepository.save(fichierCave);
-            LOGGER.info("FichierCave enregistré : " + fichierCave.getNomFichier());
+            LOGGER.info("FichierCave enregistré : {}", fichierCave.getNomFichier());
         }
 
-        frequentationGareService.alimenterDepuisStops(fichierCave, stops);
-        LOGGER.info("Fréquentations enregistrées pour : " + fichierCave.getNomFichier());
+        frequentationGareService.alimenterDepuisStops(fichierCave, stops, distanceMaxKm);
+        LOGGER.info("Fréquentations enregistrées pour : {}", fichierCave.getNomFichier());
     }
 
     private Path construireCheminSortie(String inputXmlPath, String outputXmlPath) {

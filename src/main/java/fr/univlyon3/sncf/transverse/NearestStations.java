@@ -25,8 +25,8 @@ public class NearestStations {
     @Resource(name = "localisation")
     private LocalisationService localisation;
 
-    public String generateNearestStationsXML(double latitude, double longitude) {
-        List<NearestStation> nearestStations = toGare(latitude, longitude);
+    public String generateNearestStationsXML(double latitude, double longitude, Double distanceMaxKm) {
+        List<NearestStation> nearestStations = toGare(latitude, longitude, distanceMaxKm);
 
         if (nearestStations.isEmpty()) {
             return "";  // On n'enrichie pas le fichier si il n'y a pas de gare
@@ -43,8 +43,8 @@ public class NearestStations {
         return xml.toString();
     }
 
-    private List<NearestStation> toGare(double latitude, double longitude) {
-        List<Gare> gares = localisation.getGaresDansUnRayonDe500Km(latitude, longitude);
+    private List<NearestStation> toGare(double latitude, double longitude, Double distanceMaxKm) {
+        List<Gare> gares = localisation.getGaresDansUnRayon(latitude, longitude, distanceMaxKm);
         List<NearestStation> nearestStations = new ArrayList<>();
         for (int i = 0; i < gares.size() ; i++) {
             nearestStations.add(new NearestStation(gares.get(i).getLatitude(), gares.get(i).getLongitude(), gares.get(i).getShortLabel(), i + 1));

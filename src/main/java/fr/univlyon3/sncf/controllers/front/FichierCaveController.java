@@ -45,8 +45,7 @@ public class FichierCaveController {
     public String uploadJson(
             @RequestParam("jsonFile") MultipartFile jsonFile,
             HttpSession session,
-            RedirectAttributes redirectAttributes
-    ) {
+            RedirectAttributes redirectAttributes) {
         if (session.getAttribute("gestionnaireConnecte") == null) {
             return "redirect:/login";
         }
@@ -67,8 +66,7 @@ public class FichierCaveController {
     public String uploadXml(
             @RequestParam("xmlFile") MultipartFile xmlFile,
             HttpSession session,
-            RedirectAttributes redirectAttributes
-    ) {
+            RedirectAttributes redirectAttributes) {
         if (session.getAttribute("gestionnaireConnecte") == null) {
             return "redirect:/login";
         }
@@ -86,13 +84,16 @@ public class FichierCaveController {
     }
 
     @PostMapping("/fichiers/enrichir")
-    public String enrichirEtEnvoyer(HttpSession session, RedirectAttributes redirectAttributes) {
+    public String enrichirEtEnvoyer(
+            @RequestParam(value = "distanceMaxKm", required = false) Double distanceMaxKm,
+            HttpSession session,
+            RedirectAttributes redirectAttributes) {
         if (session.getAttribute("gestionnaireConnecte") == null) {
             return "redirect:/login";
         }
 
         try {
-            enrichissementExportFichier.enrichirEtArchiverFichiers();
+            enrichissementExportFichier.enrichirEtArchiverFichiers(distanceMaxKm);
             redirectAttributes.addFlashAttribute("successMessage",
                     "Le traitement a été lancé avec succès.");
         } catch (Exception e) {

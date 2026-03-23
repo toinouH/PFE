@@ -93,7 +93,7 @@ class NearestStationsTest {
         NearestStations nearestStations = new NearestStations();
 
         for (var stop : stops) {
-            String xmlGenere = nearestStations.generateNearestStationsXML(stop.latitude(), stop.longitude());
+            String xmlGenere = nearestStations.generateNearestStationsXML(stop.latitude(), stop.longitude(), null);
 
             if (!xmlGenere.isEmpty()) {
                 assertTrue(xmlGenere.contains("<NearestStations>"),

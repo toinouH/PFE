@@ -24,7 +24,7 @@ import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class XMLWritterTest {
+class XMLWritterTest {
 
     private XMLReader reader;
     private FichierCaveRepository fichierCaveRepository;
@@ -56,7 +56,7 @@ public class XMLWritterTest {
         // Mock repository behavior
         when(regionRepository.findByTrigramme("AQU")).thenReturn(Optional.empty());
 
-        writter.enrichirXML(inputPath, outputPath);
+        writter.enrichirXML(inputPath, outputPath, null);
 
         Path actualOutputFile = Paths.get(outputPath, "AQU", "FichierCAVE_AQU_X12345_29062022_enriched.xml");
 

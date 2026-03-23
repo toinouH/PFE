@@ -20,8 +20,8 @@ public class Localisation implements LocalisationService {
 
     private static final double RAYON_TERRE_KM = 6371.0D;
 
-    @Value("${distance.maxkm}")
-    private double DISTANCE_MAX_KM /*= 500.0D*/;    // La valeur par défaut est de 500.00km
+    @Value("${distance.maxkm:500.0}")
+    private double DISTANCE_MAX_KM;    // La valeur par défaut est de 500.00km
 
     public double DISTANCE_MAX_KM() {
         return DISTANCE_MAX_KM;
@@ -32,9 +32,10 @@ public class Localisation implements LocalisationService {
     @Value("${path.fichierReferentielGares}")
     private String SOURCE_FICHIER_JSON = "input/Référentiel_stations_transverses.json";
 
-    /// Cette méthode retourne la liste des gares situées dans un rayon de 500km autour d'un point donné
+    /// Cette méthode retourne la liste des gares situées dans un rayon donné autour d'un point donné
     /// Les gares sont ordonnées dans l'ordre croissant de la plus proche à la plus éloignée
-    public List<Gare> getGaresDansUnRayonDe500Km(double latitude, double longitude) {
+    public List<Gare> getGaresDansUnRayon(double latitude, double longitude, Double distanceMaxKm) {
+        double limit = (distanceMaxKm != null) ? distanceMaxKm : DISTANCE_MAX_KM;
         List<GareDistance> garesDansLeRayon = new ArrayList<>();
 
         Path configuredPath = Paths.get(SOURCE_FICHIER_JSON);
@@ -54,7 +55,7 @@ public class Localisation implements LocalisationService {
             for (Gare gare : gares) {
                 double distance = calculerDistanceKm(latitude, longitude, gare.getLatitude(), gare.getLongitude());
 
-                if (distance <= DISTANCE_MAX_KM) {
+                if (distance <= limit) {
                     // On ajoute la gare et sa distance au résultat
                     garesDansLeRayon.add(new GareDistance(gare, distance));
                 }

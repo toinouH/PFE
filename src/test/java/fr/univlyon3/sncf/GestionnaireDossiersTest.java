@@ -14,7 +14,7 @@ import java.util.Comparator;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class GestionnaireDossiersTest {
+class GestionnaireDossiersTest {
 
     @TempDir
     private static Path tempDir;

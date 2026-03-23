@@ -19,8 +19,7 @@ public class GareController {
 
     public GareController(
             GareRepository gareRepository,
-            ReferentielGareService referentielGareService
-    ) {
+            ReferentielGareService referentielGareService) {
         this.gareRepository = gareRepository;
         this.referentielGareService = referentielGareService;
     }
@@ -39,9 +38,7 @@ public class GareController {
     @PostMapping("/gares/upload-json")
     public String uploadJsonReferentiel(
             @RequestParam("jsonFile") MultipartFile jsonFile,
-            HttpSession session,
-            RedirectAttributes redirectAttributes
-    ) {
+            HttpSession session, RedirectAttributes redirectAttributes) {
         if (session.getAttribute("gestionnaireConnecte") == null) {
             return "redirect:/login";
         }

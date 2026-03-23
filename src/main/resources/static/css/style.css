@@ -1,14 +1,14 @@
 :root {
-    --rail-carmillon: #88276F;   
-    --rail-navy: #08112b;        
-    --rail-red: #e60028;         
-    --bg-app: #f0f4f8;           
-    --white: #ffffff;            
+    --rail-carmillon: #88276F;
+    --rail-navy: #08112b;
+    --rail-red: #e60028;
+    --bg-app: #f0f4f8;
+    --white: #ffffff;
     --border-grey: rgba(207, 216, 220, 0.5);
 
     --grad-rail: linear-gradient(135deg, #88276F 0%, #5e1a4d 100%);
     --grad-bg: linear-gradient(180deg, #f0f4f8 0%, #d7dde8 100%);
-    
+
     --shadow-soft: 0 10px 30px rgba(0, 0, 0, 0.05);
     --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
@@ -19,7 +19,7 @@
 
 /* On change height en min-height pour permettre le scroll si besoin */
 html, body {
-    min-height: 100%; 
+    min-height: 100%;
     margin: 0;
 }
 
@@ -43,7 +43,7 @@ body {
     align-items: center;
     padding: 0 5%;
     border-bottom: 1px solid rgba(255, 255, 255, 0.3);
-    box-shadow: 0 2px 15px rgba(0,0,0,0.03);
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.03);
     position: sticky;
     top: 0;
     z-index: 1000;
@@ -78,10 +78,11 @@ footer {
     padding: 15px;
     text-align: center;
     font-size: 0.85rem;
-    border-top: 1px solid rgba(0,0,0,0.05);
+    border-top: 1px solid rgba(0, 0, 0, 0.05);
     width: 100%;
     /* On retire position: fixed pour qu'il suive le flux */
 }
+
 .brand {
     text-decoration: none;
     display: flex;
@@ -316,9 +317,20 @@ tr:hover {
     text-transform: uppercase;
 }
 
-.badge-pending { background: #fff3e0; color: #ef6c00; }
-.badge-success { background: var(--success-bg); color: var(--success-text); }
-.badge-error { background: var(--error-bg); color: var(--error-text); }
+.badge-pending {
+    background: #fff3e0;
+    color: #8a4500;
+}
+
+.badge-success {
+    background: var(--success-bg);
+    color: var(--success-text);
+}
+
+.badge-error {
+    background: var(--error-bg);
+    color: var(--error-text);
+}
 
 /* --- BARRE DE PROGRESSION --- */
 .progress-bar {
@@ -334,10 +346,20 @@ tr:hover {
     border-radius: 10px;
     background: var(--rail-carmillon);
 }
-/* Groupement de colonnes */
-.col-group-in { color: #2e7d32; font-weight: 600; } /* Vert pour les montées */
-.col-group-out { color: #c62828; font-weight: 600; } /* Rouge pour les descentes */
 
+/* Groupement de colonnes */
+.col-group-in {
+    color: #2e7d32;
+    font-weight: 600;
+}
+
+/* Vert pour les montées */
+.col-group-out {
+    color: #c62828;
+    font-weight: 600;
+}
+
+/* Rouge pour les descentes */
 .type-icon {
     width: 30px;
     height: 30px;
@@ -486,6 +508,7 @@ tr:hover {
 .localization-point[data-delay="0.3"] circle:first-child {
     animation-delay: 0.3s;
 }
+
 .localization-point[data-delay="0.3"] .dot {
     animation-delay: 0.3s;
 }
@@ -493,6 +516,7 @@ tr:hover {
 .localization-point[data-delay="0.6"] circle:first-child {
     animation-delay: 0.6s;
 }
+
 .localization-point[data-delay="0.6"] .dot {
     animation-delay: 0.6s;
 }

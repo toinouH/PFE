@@ -26,7 +26,7 @@ public class EnrichissementExportFichierTest {
     @Disabled("Ceci est un quasiment un test de production et peut pointer vers un autre dossier système")
     @Test
     void lanceLeTraitement() throws Exception {
-        service.enrichirEtArchiverFichiers();
+        service.enrichirEtArchiverFichiers(null);
 
         Path fichierGenere = Path.of("target/test-output", "AQU", "FichierCAVE_AQU_X12345_29062022_enriched.xml");
 

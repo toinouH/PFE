@@ -49,6 +49,7 @@ public class FrequentationGare {
     private FichierCave fichierCave;
 
     public FrequentationGare() {
+        // This is needed by JPA
     }
 
     public Integer getIdFrequentation() {
