@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Temps de démarrage
         const startTime = Date.now();
-        const minimumDuration = 5000; // 10 secondes en millisecondes
+        const minimumDuration = 5000; // 5 secondes en millisecondes
         
         // Lancer le traitement d'enrichissement
         fetch(enrichirForm.action, {
@@ -106,7 +106,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function startTimer() {
         // 10 secondes de timer minimum
-        let remainingSeconds = 10;
+        let remainingSeconds = 5;
         updateTimerDisplay(remainingSeconds);
         
         timerInterval = setInterval(() => {
