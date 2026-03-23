@@ -1,43 +1,73 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-    <head>
-        <meta charset="UTF-8">
-        <title>Créer un compte - SNCF</title>
-        <link rel="stylesheet" th:href="@{/css/style.css}">
-    </head>
-    <body>
-        <div th:replace="fragments/header :: header"></div>
-        <h1>Créer un compte</h1>
+<head>
+    <meta charset="UTF-8">
+    <title>RailFlow - Inscription</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+</head>
+<body>
+    <div th:replace="fragments/header :: header"></div>
 
-        <form th:action="@{/creer-compte}" method="post">
-            <div>
-                <label for="nom">Nom:</label>
-                <input type="text" id="nom" name="nom" required>
-            <div>
-            <div>
-                <label for="prenom">Prénom:</label>
-                <input type="text" id="prenom" name="prenom" required>
-            </div>
-            <div>
-                <label for="login">Login:</label>
-                <input type="text" id="login" name="login" required>
+    <main class="auth-wrapper">
+        <div class="auth-card">
+           <p class="auth-subtitle">Créer un nouveau compte gestionnaire</p>
+
+            <div th:if="${error}" class="error-msg">
+                <i class="fas fa-exclamation-triangle"></i> <span th:text="${error}">Erreur</span>
             </div>
 
-            <div>
-                <label for="motPasse">Password:</label>
-                <input type="password" id="motPasse" name="motPasse" required>
-            </div>
-            <div>
-                <label for="confirmMotPasse">Confirm Password:</label>
-                <input type="password" id="confirmMotPasse" name="confirmMotPasse" required>
-            </div>
+            <form th:action="@{/creer-compte}" method="post">
+                <div style="display: flex; gap: 10px;">
+                    <div class="form-group" style="flex: 1;">
+                        <label>NOM</label>
+                        <div class="input-icon-wrapper">
+                            <i class="fas fa-address-card"></i>
+                            <input type="text" name="nom" placeholder="Martin" required>
+                        </div>
+                    </div>
+                    <div class="form-group" style="flex: 1;">
+                        <label>PRÉNOM</label>
+                        <div class="input-icon-wrapper">
+                            <i class="fas fa-address-card"></i>
+                            <input type="text" name="prenom" placeholder="jean" required>
+                        </div>
+                    </div>
+                </div>
 
-            <div>
-                <button type="submit">Register</button>
-            </div>
-        </form>
+                <div class="form-group">
+                    <label>IDENTIFIANT DE CONNEXION</label>
+                    <div class="input-icon-wrapper">
+                        <i class="fas fa-at"></i>
+                        <input type="text" name="login" placeholder="Ex: jmartin2024" required>
+                    </div>
+                </div>
 
-        <p th:if="${error}" th:text="${error}" style="color:red;"></p>
-        <div th:replace="fragments/footer :: footer"></div>
-    </body>
+                <div class="form-group">
+                    <label>MOT DE PASSE</label>
+                    <div class="input-icon-wrapper">
+                        <i class="fas fa-key"></i>
+                        <input type="password" name="motPasse" placeholder="Créer un mot de passe" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>CONFIRMATION</label>
+                    <div class="input-icon-wrapper">
+                        <i class="fas fa-check-double"></i>
+                        <input type="password" name="confirmMotPasse" placeholder="Répéter le mot de passe" required>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn-rail">Créer mon compte</button>
+            </form>
+
+            <div class="auth-footer">
+                Déjà gestionnaire ? <a th:href="@{/login}">Connectez-vous</a>
+            </div>
+        </div>
+    </main>
+
+    <div th:replace="fragments/footer :: footer"></div>
+</body>
 </html>

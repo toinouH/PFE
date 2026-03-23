@@ -21,6 +21,7 @@ public class FrequentationGareController {
             return "redirect:/login";
         }
 
+        model.addAttribute("gestionnaireConnecte", session.getAttribute("gestionnaireConnecte"));
         model.addAttribute("frequentations", frequentationGareRepository.findAll());
         return "frequentations";
     }

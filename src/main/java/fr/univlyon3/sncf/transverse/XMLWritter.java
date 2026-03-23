@@ -15,6 +15,8 @@ import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Component;
 
 import fr.univlyon3.sncf.models.FichierCave;
@@ -23,9 +25,6 @@ import fr.univlyon3.sncf.repositories.FichierCaveRepository;
 import fr.univlyon3.sncf.repositories.RegionRepository;
 import fr.univlyon3.sncf.services.FrequentationGareService;
 import jakarta.annotation.Resource;
-
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 @Component("xmlWritter")
 public class XMLWritter {

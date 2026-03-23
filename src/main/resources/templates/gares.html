@@ -1,48 +1,82 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-    <head>
-        <meta charset="UTF-8">
-        <title>Liste des gares</title>
-        <link rel="stylesheet" th:href="@{/css/style.css}">
-    </head>
-    <body>
+<head>
+    <meta charset="UTF-8">
+    <title>RailFlow - Référentiel Gares</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+</head>
+<body>
+    <div th:replace="fragments/header :: header"></div>
 
-        <div th:replace="fragments/header :: header"></div>
+    <main class="container">
+        <div class="page-header">
+            <div>
+                <h1>Référentiel des <span>Gares</span></h1>
+                <p style="opacity: 0.6; margin-top: -10px;">Gestion des points d'arrêt et coordonnées GPS</p>
+            </div>
+            
+            <div th:if="${successMessage}" class="alert-success" style="padding: 10px 20px; border-radius: 12px; display: flex; align-items: center; gap: 10px;">
+                <i class="fas fa-check-circle"></i> [[${successMessage}]]
+            </div>
+            <div th:if="${errorMessage}" class="alert-error" style="padding: 10px 20px; border-radius: 12px; display: flex; align-items: center; gap: 10px;">
+                <i class="fas fa-exclamation-triangle"></i> [[${errorMessage}]]
+            </div>
+        </div>
 
-        <h1>Liste des gares</h1>
-        <!--ajouter le nouveau fichier json de gare-->
-        <p th:if="${successMessage}" th:text="${successMessage}" style="color: green; font-weight: bold;"></p>
-        <p th:if="${errorMessage}" th:text="${errorMessage}" style="color: red; font-weight: bold;"></p>
+        <div class="action-card" style="max-width: 600px; margin-bottom: 40px;">
+            <h3 style="margin-bottom: 20px;">
+                <i class="fas fa-file-import" style="color: var(--rail-carmillon); margin-right: 10px;"></i> 
+                Importer le référentiel JSON
+            </h3>
+            <form th:action="@{/gares/upload-json}" method="post" enctype="multipart/form-data" class="input-icon-wrapper">
+                <input type="file" name="jsonFile" accept=".json" required 
+                       style="margin-bottom: 20px; padding: 10px; border: 1px dashed var(--border-grey); background: var(--bg-app); border-radius: 8px;">
+                <button type="submit" class="btn-rail">
+                    <i class="fas fa-upload"></i> Mettre à jour la base
+                </button>
+            </form>
+        </div>
 
-        <h2>Importer le référentiel JSON</h2>
-        <form th:action="@{/gares/upload-json}" method="post" enctype="multipart/form-data">
-            <input type="file" name="jsonFile" accept=".json" required>
-            <button type="submit">Importer le JSON</button>
-        </form>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Code (Short)</th>
+                        <th>Libellé Principal</th>
+                        <th>Libellé Long</th>
+                        <th><i class="fas fa-map-marker-alt"></i> Coordonnées GPS</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="gare : ${gares}">
+                        <td>
+                            <code style="background: var(--bg-app); padding: 4px 8px; border-radius: 4px; color: var(--rail-carmillon); font-weight: bold;" 
+                                  th:text="${gare.shortLabel}"></code>
+                        </td>
+                        <td>
+                            <div style="font-weight: 600; color: var(--rail-navy);" th:text="${gare.label}"></div>
+                            <div style="font-size: 0.8rem; opacity: 0.5;" th:text="${gare.mediumLabel}"></div>
+                        </td>
+                        <td th:text="${gare.longLabel}"></td>
+                        <td>
+                            <div style="display: flex; gap: 15px; font-family: monospace; font-size: 0.85rem;">
+                                <span><strong style="opacity: 0.4;">LAT:</strong> [[${gare.latitude}]]</span>
+                                <span><strong style="opacity: 0.4;">LON:</strong> [[${gare.longitude}]]</span>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr th:if="${#lists.isEmpty(gares)}">
+                        <td colspan="4" style="text-align: center; padding: 50px; opacity: 0.5;">
+                            <i class="fas fa-database fa-3x" style="margin-bottom: 15px; display: block;"></i>
+                            Aucune gare enregistrée. Veuillez importer un fichier JSON.
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
 
-        <hr>
-        <table border="1">
-            <thead>
-                <tr>
-                    <th>Short label</th>
-                    <th>Label</th>
-                    <th>Medium label</th>
-                    <th>Long label</th>
-                    <th>Latitude</th>
-                    <th>Longitude</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr th:each="gare : ${gares}">
-                    <td th:text="${gare.getShortLabel()}"></td>
-                    <td th:text="${gare.getLabel()}"></td>
-                    <td th:text="${gare.getMediumLabel()}"></td>
-                    <td th:text="${gare.getLongLabel()}"></td>
-                    <td th:text="${gare.getLatitude()}"></td>
-                    <td th:text="${gare.getLongitude()}"></td>
-                </tr>
-            </tbody>
-        </table>
-        <div th:replace="fragments/footer :: footer"></div>
-    </body>
+    <div th:replace="fragments/footer :: footer"></div>
+</body>
 </html>

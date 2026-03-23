@@ -31,6 +31,7 @@ public class GareController {
             return "redirect:/login";
         }
 
+        model.addAttribute("gestionnaireConnecte", session.getAttribute("gestionnaireConnecte"));
         model.addAttribute("gares", gareRepository.findAll());
         return "gares";
     }

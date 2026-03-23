@@ -2,62 +2,131 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Fichiers CAVE</title>
+    <title>RailFlow - Gestion CAVE</title>
     <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 </head>
 <body>
-
     <div th:replace="fragments/header :: header"></div>
 
-    <h1>Gestion des fichiers CAVE</h1>
+    <div class="container">
+        <div class="page-header">
+            <h1>Gestion des fichiers <span>CAVE</span></h1>
+            <div th:if="${successMessage}" class="alert-success" style="padding: 10px 20px; border-radius: 8px;">
+                <i class="fas fa-check-circle"></i> [[${successMessage}]]
+            </div>
+        </div>
 
-    <p th:if="${successMessage}" th:text="${successMessage}" style="color: green; font-weight: bold;"></p>
-    <p th:if="${errorMessage}" th:text="${errorMessage}" style="color: red; font-weight: bold;"></p>
+        <div class="action-grid">
+            <div class="action-card">
+                <h3><i class="fas fa-cloud-upload-alt" style="color: var(--rail-carmillon)"></i> Importation XML</h3>
+                <form th:action="@{/fichiers/upload-xml}" method="post" enctype="multipart/form-data">
+                    <input type="file" name="xmlFile" accept=".xml" required 
+                           style="margin-bottom: 15px; font-size: 0.8rem; width: 100%;">
+                    <button type="submit" class="btn-rail">Uploader le fichier</button>
+                </form>
+            </div>
 
-    <h2>Ajouter le fichier référentiel JSON</h2>
-    <form th:action="@{/fichiers/upload-json}" method="post" enctype="multipart/form-data">
-        <input type="file" name="jsonFile" accept=".json" required>
-        <button type="submit">Uploader le JSON</button>
-    </form>
+            <div class="action-card">
+                <h3><i class="fas fa-magic" style="color: var(--rail-navy)"></i> Enrichissement</h3>
+                <p style="font-size: 0.85rem; opacity: 0.7;">Lancer le traitement automatique et l'envoi aux régions.</p>
+                <form id="enrichirForm" th:action="@{/fichiers/enrichir}" method="post">
+                    <button type="submit" class="btn-rail" style="background: var(--rail-navy)">Lancer le traitement</button>
+                </form>
+            </div>
+        </div>
 
-    <h2>Ajouter un fichier XML CAVE</h2>
-    <form th:action="@{/fichiers/upload-xml}" method="post" enctype="multipart/form-data">
-        <input type="file" name="xmlFile" accept=".xml" required>
-        <button type="submit">Uploader le XML</button>
-    </form>
+        <!-- LOADER MODAL -->
+        <div id="loaderModal" class="loader-modal">
+            <div class="loader-content">
+                <div class="loader-title">
+                    <i class="fas fa-map"></i> Recherche des localisations
+                </div>
+                
+                <!-- MAP ANIMATION -->
+                <div class="map-container">
+                    <svg class="map-svg" viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
+                        <!-- Fond de la carte -->
+                        <rect width="400" height="300" fill="#f0f4f8"/>
+                        
+                        <!-- Routes/chemins -->
+                        <line x1="50" y1="100" x2="350" y2="120" stroke="#d0d7dd" stroke-width="2"/>
+                        <line x1="80" y1="50" x2="100" y2="250" stroke="#d0d7dd" stroke-width="2"/>
+                        <line x1="200" y1="30" x2="180" y2="270" stroke="#d0d7dd" stroke-width="2"/>
+                        
+                        <!-- Points de stations fixes -->
+                        <circle cx="100" cy="80" r="3" fill="#08112b" opacity="0.3"/>
+                        <circle cx="280" cy="150" r="3" fill="#08112b" opacity="0.3"/>
+                        <circle cx="150" cy="200" r="3" fill="#08112b" opacity="0.3"/>
+                        
+                        <!-- Points animés (localisations trouvées) -->
+                        <g class="localization-point" data-delay="0">
+                            <circle r="8" fill="none" stroke="#88276F" stroke-width="2"/>
+                            <circle class="dot" r="4" fill="#88276F"/>
+                        </g>
+                        <g class="localization-point" data-delay="0.3" style="transform: translate(150px, 200px)">
+                            <circle r="8" fill="none" stroke="#88276F" stroke-width="2"/>
+                            <circle class="dot" r="4" fill="#88276F"/>
+                        </g>
+                        <g class="localization-point" data-delay="0.6" style="transform: translate(280px, 150px)">
+                            <circle r="8" fill="none" stroke="#88276F" stroke-width="2"/>
+                            <circle class="dot" r="4" fill="#88276F"/>
+                        </g>
+                    </svg>
+                </div>
 
-    <h2>Lancer le traitement</h2>
-    <form th:action="@{/fichiers/enrichir}" method="post">
-        <button type="submit">Créer et envoyer les fichiers aux régions</button>
-    </form>
+                <div class="loader-text">
+                    <p>Enrichissement des données en cours...</p>
+                    <p class="loader-timer"><span id="timerMinutes">1</span>:<span id="timerSeconds">00</span></p>
+                </div>
 
-    <hr>
-    <table border="1">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Nom fichier</th>
-                <th>Date réception</th>
-                <th>Date course</th>
-                <th>Véhicule</th>
-                <th>Statut</th>
-                <th>Taux enrichissement</th>
-                <th>Région</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr th:each="fichier : ${fichiers}">
-                <td th:text="${fichier.idFichier}"></td>
-                <td th:text="${fichier.nomFichier}"></td>
-                <td th:text="${fichier.dateReception}"></td>
-                <td th:text="${fichier.dateCourse}"></td>
-                <td th:text="${fichier.vehicule}"></td>
-                <td th:text="${fichier.statutEnrichissement}"></td>
-                <td th:text="${fichier.tauxEnrichissement}"></td>
-                <td th:text="${fichier.region.nom}"></td>
-            </tr>
-        </tbody>
-    </table>
+                <div class="loader-bar">
+                    <div class="loader-progress"></div>
+                </div>
+            </div>
+        </div>
 
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Fichier</th>
+                        <th>Réception</th>
+                        <th>Véhicule</th>
+                        <th>Région</th>
+                        <th>Statut</th>
+                        <th>Enrichissement</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="fichier : ${fichiers}">
+                        <td th:text="${fichier.idFichier}" style="font-weight: bold; opacity: 0.5;"></td>
+                        <td>
+                            <div style="font-weight: 600;" th:text="${fichier.nomFichier}"></div>
+                            <div style="font-size: 0.75rem; opacity: 0.5;" th:text="${'Course du ' + fichier.dateCourse}"></div>
+                        </td>
+                        <td th:text="${#temporals.format(fichier.dateReception, 'dd/MM/yyyy HH:mm')}"></td>
+                        <td><i class="fas fa-train"></i> [[${fichier.vehicule}]]</td>
+                        <td><span class="badge" style="background: #e3f2fd; color: #1565c0;">[[${fichier.region.nom}]]</span></td>
+                        <td>
+                            <span th:class="${fichier.statutEnrichissement == 'TERMINE' ? 'badge badge-success' : 'badge badge-pending'}"
+                                  th:text="${fichier.statutEnrichissement}">
+                            </span>
+                        </td>
+                        <td style="min-width: 150px;">
+                            <span th:text="${fichier.tauxEnrichissement + '%'}"></span>
+                            <div class="progress-bar">
+                                <div class="progress-fill" th:style="'width:' + ${fichier.tauxEnrichissement} + '%'"></div>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div th:replace="fragments/footer :: footer"></div>
+    <script th:src="@{/js/app.js}"></script>
 </body>
 </html>

@@ -1,21 +1,28 @@
-<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<body>
+<header th:fragment="header" class="main-header">
+    <a th:href="@{/dashboard}" class="brand">
+        <div class="brand-title"><span>Rail</span>Flow</div>
+    </a>
 
-<header th:fragment="header">
-    <nav>
-        <a th:href="@{/dashboard}">Dashboard</a> |
-        <a th:href="@{/fichiers}">Fichiers</a> |
-        <a th:href="@{/gares}">Gares</a> |
-        <a th:href="@{/frequentations}">Fréquentations</a> |
-        <!-- Affichage du nom du gestionnaire si connecté -->
-            
-            <span th:if="${gestionnaire} != null" th:text="${gestionnaire.nom}"></span>
-         
-        <a th:if="${gestionnaire} != null" th:href="@{/logout}">Logout</a>
+    <nav class="main-nav" th:if="${gestionnaireConnecte != null}">
+        <a th:href="@{/dashboard}" class="nav-link"><i class="fas fa-th-large"></i> Dashboard</a>
+        <a th:href="@{/fichiers}" class="nav-link"><i class="fas fa-folder-open"></i> Fichiers</a>
+        <a th:href="@{/gares}" class="nav-link"><i class="fas fa-map-pin"></i> Gares</a>
+        <a th:href="@{/frequentations}" class="nav-link"><i class="fas fa-chart-bar"></i> Fréquentations</a>
     </nav>
-    <hr>
-</header>
 
-</body>
-</html>
+    <div class="user-menu">
+        <th:block th:if="${gestionnaireConnecte != null}">
+            <span class="nav-link" style="cursor: default;">
+                <i class="fas fa-user-circle"></i> [[${gestionnaireConnecte.prenom}]]
+            </span>
+            <a th:href="@{/logout}" class="nav-link" style="color: var(--rail-red)" title="Déconnexion">
+                <i class="fas fa-power-off"></i>
+            </a>
+        </th:block>
+        
+        <th:block th:if="${gestionnaireConnecte == null}">
+            <a th:href="@{/login}" class="nav-link">Connexion</a>
+            <a th:href="@{/creer-compte}" class="nav-link" style="color: var(--rail-carmillon); background: rgba(136, 39, 111, 0.08);">S'inscrire</a>
+        </th:block>
+    </div>
+</header>

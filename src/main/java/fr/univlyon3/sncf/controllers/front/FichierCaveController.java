@@ -36,6 +36,7 @@ public class FichierCaveController {
             return "redirect:/login";
         }
 
+        model.addAttribute("gestionnaireConnecte", session.getAttribute("gestionnaireConnecte"));
         model.addAttribute("fichiers", fichierCaveRepository.findAll());
         return "fichiers";
     }

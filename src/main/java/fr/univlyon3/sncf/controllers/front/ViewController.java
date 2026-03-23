@@ -20,7 +20,8 @@ public class ViewController {
     }
 
     @GetMapping("/login")
-    public String showLoginPage() {
+    public String showLoginPage(Model model, HttpSession session) {
+        model.addAttribute("gestionnaireConnecte", session.getAttribute("gestionnaireConnecte"));
         return "login";
     }
 
@@ -40,7 +41,8 @@ public class ViewController {
     }
 
     @GetMapping("/creer-compte")
-    public String showCreateAccountPage() {
+    public String showCreateAccountPage(Model model, HttpSession session) {
+        model.addAttribute("gestionnaireConnecte", session.getAttribute("gestionnaireConnecte"));
         return "creer-compte";
     }
 
@@ -70,11 +72,12 @@ public class ViewController {
     }
 
     @GetMapping("/dashboard")
-    public String dashboard(HttpSession session) {
+    public String dashboard(Model model, HttpSession session) {
         if (session.getAttribute("gestionnaireConnecte") == null) {
             return "redirect:/login";
         }
 
+        model.addAttribute("gestionnaireConnecte", session.getAttribute("gestionnaireConnecte"));
         return "dashboard";
     }
 

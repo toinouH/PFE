@@ -2,45 +2,76 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Fréquentations</title>
+    <title>RailFlow - Fréquentations</title>
     <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 </head>
 <body>
 
-<div th:replace="fragments/header :: header"></div>
+    <div th:replace="fragments/header :: header"></div>
 
-<h1>Fréquentation des gares</h1>
+    <main class="container">
+        <div class="page-header">
+            <div>
+                <h1>Analyse des <span>Fréquentations</span></h1>
+                <p style="opacity: 0.6; margin-top: -10px;">Données détaillées des montées et descentes par gare</p>
+            </div>
+        </div>
 
-<table border="1">
-    <thead>
-        <tr>
-            <th>ID</th>
-            <th>Date mesure</th>
-            <th>Gare</th>
-            <th>Fichier</th>
-            <th>Montées adultes</th>
-            <th>Descentes adultes</th>
-            <th>Montées vélos</th>
-            <th>Descentes vélos</th>
-            <th>Montées PMR</th>
-            <th>Descentes PMR</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr th:each="f : ${frequentations}">
-            <td th:text="${f.idFrequentation}"></td>
-            <td th:text="${f.dateMesure}"></td>
-            <td th:text="${f.gare.shortLabel}"></td>
-            <td th:text="${f.fichierCave.nomFichier}"></td>
-            <td th:text="${f.monteesAdults}"></td>
-            <td th:text="${f.descentesAdults}"></td>
-            <td th:text="${f.monteesBikes}"></td>
-            <td th:text="${f.descentesBikes}"></td>
-            <td th:text="${f.monteesWheelchairs}"></td>
-            <td th:text="${f.descentesWheelchairs}"></td>
-        </tr>
-    </tbody>
-</table>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th rowspan="2">Détails Mesure</th>
+                        <th rowspan="2">Gare & Source</th>
+                        <th colspan="2" style="text-align: center; border-left: 1px solid #ddd; background: rgba(0,0,0,0.05);">
+                            <i class="fas fa-users"></i> Voyageurs
+                        </th>
+                        <th colspan="2" style="text-align: center; border-left: 1px solid #ddd; background: rgba(0,0,0,0.05);">
+                            <i class="fas fa-bicycle"></i> Vélos
+                        </th>
+                        <th colspan="2" style="text-align: center; border-left: 1px solid #ddd; background: rgba(0,0,0,0.05);">
+                            <i class="fas fa-wheelchair"></i> PMR
+                        </th>
+                    </tr>
+                    <tr>
+                        <th style="border-left: 1px solid #ddd;"><i class="fas fa-arrow-up col-group-in"></i> In</th>
+                        <th><i class="fas fa-arrow-down col-group-out"></i> Out</th>
+                        <th style="border-left: 1px solid #ddd;"><i class="fas fa-arrow-up col-group-in"></i> In</th>
+                        <th><i class="fas fa-arrow-down col-group-out"></i> Out</th>
+                        <th style="border-left: 1px solid #ddd;"><i class="fas fa-arrow-up col-group-in"></i> In</th>
+                        <th><i class="fas fa-arrow-down col-group-out"></i> Out</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="f : ${frequentations}">
+                        <td>
+                            <div style="font-weight: 600;" th:text="${#temporals.format(f.dateMesure, 'dd/MM/yyyy')}"></div>
+                            <div style="font-size: 0.75rem; opacity: 0.5;">ID: #[[${f.idFrequentation}]]</div>
+                        </td>
+                        <td>
+                            <div style="color: var(--rail-carmillon); font-weight: 700;">
+                                <i class="fas fa-train"></i> [[${f.gare.shortLabel}]]
+                            </div>
+                            <div style="font-size: 0.75rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 150px;" 
+                                 th:title="${f.fichierCave.nomFichier}">
+                                 Source: [[${f.fichierCave.nomFichier}]]
+                            </div>
+                        </td>
+                        <td class="num-data col-group-in" style="border-left: 1px solid #eee;" th:text="${f.monteesAdults}"></td>
+                        <td class="num-data col-group-out" th:text="${f.descentesAdults}"></td>
+                        
+                        <td class="num-data col-group-in" style="border-left: 1px solid #eee;" th:text="${f.monteesBikes}"></td>
+                        <td class="num-data col-group-out" th:text="${f.descentesBikes}"></td>
+                        
+                        <td class="num-data col-group-in" style="border-left: 1px solid #eee;" th:text="${f.monteesWheelchairs}"></td>
+                        <td class="num-data col-group-out" th:text="${f.descentesWheelchairs}"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
 
+    <div th:replace="fragments/footer :: footer"></div>
 </body>
 </html>

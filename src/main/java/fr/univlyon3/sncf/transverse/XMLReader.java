@@ -1,13 +1,5 @@
 package fr.univlyon3.sncf.transverse;
 
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.NodeList;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -15,6 +7,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
 
 @Component("xmlReader")
 public class XMLReader {
@@ -58,17 +59,33 @@ public class XMLReader {
                 double latitude = Double.parseDouble(gpsElement.getAttribute("latitude"));
                 double longitude = Double.parseDouble(gpsElement.getAttribute("longitude"));
 
-                int totalIn = 0;
-                int totalOut = 0;
+                int adultsIn = 0, adultsOut = 0, bikesIn = 0, bikesOut = 0, wheelchairsIn = 0, wheelchairsOut = 0;
 
                 NodeList countNodes = stopElement.getElementsByTagName("Count");
                 for (int j = 0; j < countNodes.getLength(); j++) {
                     Element countElement = (Element) countNodes.item(j);
-                    totalIn += Integer.parseInt(countElement.getAttribute("in"));
-                    totalOut += Integer.parseInt(countElement.getAttribute("out"));
+                    String type = countElement.getAttribute("type");
+                    int in = Integer.parseInt(countElement.getAttribute("in"));
+                    int out = Integer.parseInt(countElement.getAttribute("out"));
+
+                    switch (type) {
+                        case "adults":
+                            adultsIn += in;
+                            adultsOut += out;
+                            break;
+                        case "bikes":
+                            bikesIn += in;
+                            bikesOut += out;
+                            break;
+                        case "wheelchairs":
+                            wheelchairsIn += in;
+                            wheelchairsOut += out;
+                            break;
+                    }
                 }
 
-                stops.add(new StopData(stopId, arrivalTime, departureTime, latitude, longitude, totalIn, totalOut));
+                stops.add(new StopData(stopId, arrivalTime, departureTime, latitude, longitude,
+                        adultsIn, adultsOut, bikesIn, bikesOut, wheelchairsIn, wheelchairsOut));
             }
 
             return stops;
@@ -108,6 +125,10 @@ public class XMLReader {
             String departureTime,
             double latitude,
             double longitude,
-            int totalIn,
-            int totalOut) {}
+            int adultsIn,
+            int adultsOut,
+            int bikesIn,
+            int bikesOut,
+            int wheelchairsIn,
+            int wheelchairsOut) {}
 }
