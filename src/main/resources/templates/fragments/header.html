@@ -1,10 +1,9 @@
 <header th:fragment="header" class="main-header">
-    <a th:href="@{/dashboard}" class="brand">
+    <a th:href="@{/fichiers.html}" class="brand">
         <div class="brand-title"><span>Rail</span>Flow</div>
     </a>
 
     <nav class="main-nav" th:if="${gestionnaireConnecte != null}">
-        <a th:href="@{/dashboard}" class="nav-link"><i class="fas fa-th-large"></i> Dashboard</a>
         <a th:href="@{/fichiers}" class="nav-link"><i class="fas fa-folder-open"></i> Fichiers</a>
         <a th:href="@{/gares}" class="nav-link"><i class="fas fa-map-pin"></i> Gares</a>
         <a th:href="@{/frequentations}" class="nav-link"><i class="fas fa-chart-bar"></i> Fréquentations</a>

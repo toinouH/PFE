@@ -33,7 +33,7 @@ public class ViewController {
         if (gestionnaire != null) {
             session.setAttribute("gestionnaireConnecte", gestionnaire);
             model.addAttribute("gestionnaire", session.getAttribute("gestionnaireConnecte"));
-            return "redirect:/dashboard";
+            return "redirect:/fichiers";
         }
 
         model.addAttribute("error", "Invalid login or password");
@@ -71,21 +71,11 @@ public class ViewController {
         return "redirect:/login";
     }
 
-    @GetMapping("/dashboard")
-    public String dashboard(Model model, HttpSession session) {
-        if (session.getAttribute("gestionnaireConnecte") == null) {
-            return "redirect:/login";
-        }
-
-        model.addAttribute("gestionnaireConnecte", session.getAttribute("gestionnaireConnecte"));
-        return "dashboard";
-    }
-
     /// Redirige le 8080 vers un url de l'application supporté
     /// Si l'utilisateur n'est pas connecté, il est redirigé vers la page de [ViewController#login]
     @GetMapping("/")
     public String redirectionDashboard() {
-        return "redirect:/dashboard";
+        return "redirect:/fichiers";
     }
 
 }

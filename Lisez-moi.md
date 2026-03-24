@@ -45,3 +45,17 @@ Le fichier de configuration est `src/main/resources/application.properties` perm
 - la localisation du fichier de localisation des gares en Json
 - la localisation des fichiers CAVE non traités
 - les dossiers de destination des fichiers CAVE enrichis.
+
+## Déploiement PROD/Classique
+
+1. Lancer l'application de manière classique avec `start.bat`
+Un jar release est déjà disponible dans ce dossier source un fichier start.bat contenant la commande de base pour
+lancer l'application. On peut également déployer l'application avec le fichier de configuration `application.yaml` pour
+surcharger la configuration par défaut.
+
+
+2. Regénérer une release depuis le dossier source
+On peut générer un jar de l'application dans le dossier `target` avec la commande suivante :
+```shell
+mvn install -Dmaven.test.skip=true
+```
