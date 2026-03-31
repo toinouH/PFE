@@ -57,7 +57,7 @@ public class GareController {
         } catch (Exception e) {
             redirectAttributes.addFlashAttribute(
                     "errorMessage",
-                    "Erreur lors de l'import du référentiel : " + e.getMessage()
+                    "Erreur lors de l'import du référentiel: Merci de bien vouloir corriger le fichier " + e.getMessage()
             );
         }
 

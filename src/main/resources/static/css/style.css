@@ -166,6 +166,7 @@ footer {
     position: relative;
     display: flex;
     align-items: center;
+    gap: 50px;
 }
 
 .input-icon-wrapper i {
@@ -205,7 +206,6 @@ footer {
     cursor: pointer;
     box-shadow: 0 8px 20px rgba(136, 39, 111, 0.25);
     transition: var(--transition);
-    margin-top: 10px;
 }
 
 .btn-rail:hover {
@@ -236,16 +236,17 @@ footer strong {
 
 /* --- DASHBOARD / TABLES --- */
 .container {
-    padding: 40px 5%;
+    padding: 40px 1%;
     max-width: 1400px;
-    margin: 0 auto;
+    margin: 0 4em;
 }
 
 .page-header {
     display: flex;
+    flex-direction: column;
     justify-content: space-between;
-    align-items: center;
-    margin-bottom: 30px;
+    align-items: start;
+    
 }
 
 /* --- CARTES D'ACTION (Upload) --- */
